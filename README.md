@@ -1,7 +1,7 @@
 # CryptoSimulator
 
 ## Summary
-A mobile crypto market simulator app that lets you invest fake money into the real cryptocurrency market.
+A mobile crypto market simulator app that lets you invest fake money into the real cryptocurrency market. 
 
 
 
@@ -20,6 +20,7 @@ A mobile crypto market simulator app that lets you invest fake money into the re
 - Achievements (example: 100% profit, lose 99% of the initial investment)
 - Levels, gaining XP from achievements and other actions
 - Buy virtual things (Lamborghini, house, ...) with money you earn
+- Notifications (your portfolio drops by 10%, ...)
 
 
 
