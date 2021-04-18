@@ -6,9 +6,11 @@ package com.vidkreca.data;
 public class Trade {
     private Cryptocurrency crypto;
     private double priceFiat;
+    private FiatCurrencies fiatCurrency;
 
-    public Trade(Cryptocurrency crypto, double priceFiat) {
+    public Trade(Cryptocurrency crypto, double priceFiat, FiatCurrencies fiatCurrency) {
         this.crypto = crypto;
         this.priceFiat = priceFiat;
+        this.fiatCurrency = fiatCurrency;
     }
 }
