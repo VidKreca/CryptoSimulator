@@ -16,6 +16,15 @@ app.use(cookieParser());
 
 app.use('/api/', apiRouter);
 
+
+// Serve icons
+let dir = path.join(__dirname, "public/icons/");
+app.use("/img/", express.static(dir));
+app.use("/img/", (req, res) => {
+	res.sendFile(path.join(dir, "missing.png"));
+});
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
