@@ -3,6 +3,7 @@ package com.vidkreca.cryptosimulator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.View;
@@ -32,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
         // Assign UI elements
         crypto_rv = findViewById(R.id.crypto_recyclerview);
 
-        GetData();
+        GetData(null);
         InitAdapter();
+        InitSwipeToRefresh();
     }
 
 
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void GetData() {
+    private void GetData(SwipeRefreshLayout pullToRefresh) {
         api.GetList(new VolleyCallBack() {
             @Override
             public void onSuccess(String json) {
@@ -64,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
 
                 adapter.notifyDataSetChanged();
 
-                Toast.makeText(getBaseContext(), app.GetStore().toString(), Toast.LENGTH_LONG).show();
+                if (pullToRefresh != null)
+                    pullToRefresh.setRefreshing(false);     // Signal that we have finished refreshing
+
+                //Toast.makeText(getBaseContext(), app.GetStore().toString(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -75,33 +80,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*public void onButtonClick(View v) {
-        api.GetList(new VolleyCallBack() {
+    private void InitSwipeToRefresh() {
+        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onSuccess(String json) {
-                List response = API.gson.fromJson(json, List.class);
-
-                tv.setText(response.currencies[0].toString());
-            }
-
-            @Override
-            public void onError(String message) {
-                tv.setText(message);
+            public void onRefresh() {
+                GetData(pullToRefresh);
             }
         });
-
-        api.GetSingle(new VolleyCallBack() {
-            @Override
-            public void onSuccess(String json) {
-                Single response = API.gson.fromJson(json, Single.class);
-
-                tv.setText(response.GetCryptocurrency().toString());
-            }
-
-            @Override
-            public void onError(String message) {
-                tv.setText(message);
-            }
-        }, et.getText().toString());
-    }*/
+    }
 }

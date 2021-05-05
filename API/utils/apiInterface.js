@@ -15,7 +15,7 @@ const publicClient = new CoinbasePro.PublicClient();
 
 // Simple caching mechanism
 var priceCache = {};
-const cacheInterval = 10 * 1000;	// Invalidate all prices older than 10s
+const cacheInterval = 3 * 1000;	// Invalidate all prices older than this interval
 
 
 

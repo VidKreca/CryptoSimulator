@@ -12,7 +12,10 @@ const validFiatCurrencies   = ["EUR", "USD"];
 const validCryptoCurrencies = [
 	{symbol: "BTC", name: "Bitcoin"}, 
 	{symbol: "ETH", name: "Ethereum"}, 
-	{symbol: "LTC", name: "Litecoin"}
+	{symbol: "LTC", name: "Litecoin"},
+	{symbol: "USDT", name: "Tether"},
+	{symbol: "ADA", name: "Cardano"},
+	{symbol: "XLM", name: "Stellar Lumens"}
 ];
 
 
