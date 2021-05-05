@@ -14,8 +14,8 @@ const publicClient = new CoinbasePro.PublicClient();
 
 
 // Simple caching mechanism
-var priceCache = {};
-const cacheInterval = 3 * 1000;	// Invalidate all prices older than this interval
+var cache = {};
+const cacheInterval = 4 * 1000;	// Invalidate all prices older than this interval
 
 
 
@@ -24,10 +24,10 @@ module.exports = {
 	async getPrice(currency, fiat="EUR") {
 
 		// Return cached value if it exist/is recent enough
-		if (fiat in priceCache) {
-			if (currency in priceCache[fiat] && new Date().getTime() - priceCache[fiat][currency].timestamp < cacheInterval) {
-				return priceCache[fiat][currency].price;
-			} 
+		if (fiat in cache) {
+			if (currency in cache[fiat] && new Date().getTime() - cache[fiat][currency].timestamp < cacheInterval) {
+				return cache[fiat][currency].price;
+			}
 		}
 
 		// Price is not in cache, fetch it from the Coinbase Pro API
@@ -35,14 +35,49 @@ module.exports = {
 		let ticker = await publicClient.getProductTicker(symbol);
 		let price  = parseFloat(ticker.price);
 
-		// Save price in cache
-		if (!(fiat in priceCache))
-			priceCache[fiat] = {};
-		priceCache[fiat][currency] = {
-			timestamp: new Date().getTime(),
-			price: price
-		};
+		// Update price in cache
+		if (fiat in cache && currency in cache[fiat])
+			cache[fiat][currency].price = price
 
 		return price;
+	},
+
+
+
+
+	async getStats(currency, fiat="EUR") {
+
+		// Return cached value if it exist/is recent enough
+		if (fiat in cache) {
+			if (currency in cache[fiat] && new Date().getTime() - cache[fiat][currency].timestamp < cacheInterval) {
+				return cache[fiat][currency];
+			}
+		}
+
+		// Price is not in cache, fetch it from the Coinbase Pro API
+		let symbol = (currency.trim() + "-" + fiat.trim()).toUpperCase();	// Build pair id from currency symbol and fiat
+		let stats = await publicClient.getProduct24HrStats(symbol);
+
+		// Change daily change percentage
+		let change = (parseFloat(stats.last) - parseFloat(stats.open))
+		let change_percentage = change / parseFloat(stats.open)
+
+		stats = {
+			price:  parseFloat(stats.last), 
+			high:   parseFloat(stats.open),
+			low:    parseFloat(stats.low),
+			volume: parseFloat(stats.volume),
+			volume_30d: parseFloat(stats.volume_30day),
+			change: change,
+			change_percentage: change_percentage
+		}
+
+		// Cache stats
+		if (!(fiat in cache))
+			cache[fiat] = {};
+		stats.timestamp = new Date().getTime();
+		cache[fiat][currency] = stats;
+
+		return stats;
 	}
 }

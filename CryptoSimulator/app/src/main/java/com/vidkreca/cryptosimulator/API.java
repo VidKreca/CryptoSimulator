@@ -18,8 +18,8 @@ import com.vidkreca.data.FiatCurrencies;
 
 public class API {
     // API related
-    //final static String url = "http://localhost:3000/api/";
-    final static String url = "http://10.0.2.2:3000/api/";
+    final static String baseUrl = "http://10.0.2.2:3000";
+    final static String url = baseUrl + "/api/";
     private Context context;
     static Gson gson = new Gson();
 

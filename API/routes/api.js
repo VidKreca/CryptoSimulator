@@ -64,6 +64,7 @@ router.get("/currencies/list/:fiat?", async (req, res) => {
 
 
 
+
 // Get single crypto currency
 router.get("/currencies/:symbol/:fiat?", async (req, res) => {
 
@@ -95,16 +96,17 @@ router.get("/currencies/:symbol/:fiat?", async (req, res) => {
 
 
 	// Build data object to return
-	let price = await apiInterface.getPrice(symbol, req.params.fiat);
+	let stats = await apiInterface.getStats(symbol, req.params.fiat);
 
 	let data = {
 		success: true,
 		timestamp: (new Date()).getTime(),		// Milliseconds since 1970
 		fiat: req.params.fiat,
-		price: price,
 		symbol: symbol,
 		name: name
 	};
+
+	data = {...data, ...stats};
 
 	return res.status(200).json(data);
 });

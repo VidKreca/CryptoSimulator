@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/crypto_icon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:padding="@dimen/padding_small"
 
         android:contentDescription="Cryptocurrency logo"
@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/crypto_name"
             android:text="Cryptocurrency"
+            android:textColor="@color/secondaryDark"
             android:textSize="@dimen/font_size_normal"/>
 
         <TextView
@@ -38,7 +39,7 @@
             android:id="@+id/crypto_symbol"
             android:text="CC"
             android:textSize="@dimen/font_size_small"
-            android:textColor="@color/secondaryDark"/>
+            android:textColor="@color/secondary"/>
 
     </LinearLayout>
 
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/crypto_price"
         android:text="0€"
-        android:textSize="@dimen/font_size_large"
+        android:textSize="@dimen/font_size_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />

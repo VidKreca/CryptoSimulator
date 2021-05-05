@@ -8,11 +8,15 @@ import com.google.gson.Gson;
 public class Cryptocurrency {
     private String name;
     private String symbol;
+    public String fiat;
 
     private double price;
-    private double[] priceHistory;
-    private double marketCap;
-    private double volume24h;
+    public double high;
+    public double low;
+    public double volume;
+    public double volume_30d;
+    public double change;
+    public double change_percentage;
 
 
 
@@ -20,10 +24,18 @@ public class Cryptocurrency {
         this.name = name;
         this.symbol = symbol;
     }
-    public Cryptocurrency(String name, String symbol, double price) {
+    public Cryptocurrency(String name, String symbol, String fiat, double price, double high, double low, double volume, double volume_30d, double change, double change_percentage) {
         this.name = name;
         this.symbol = symbol;
+        this.fiat = fiat;
+
         this.price = price;
+        this.high = high;
+        this.low = low;
+        this.volume = volume;
+        this.volume_30d = volume_30d;
+        this.change = change;
+        this.change_percentage = change_percentage;
     }
 
 

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vidkreca.data.Cryptocurrency;
 
 import androidx.annotation.NonNull;
@@ -52,6 +53,13 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
             holder.name.setText(tmp.getName());
             holder.symbol.setText(tmp.getSymbol());
             holder.price.setText(Double.toString(tmp.getPrice()) + "€");    // TODO - change € to selected FIAT
+
+            // Load icon image into imageview using Picasso
+            String imageUrl = API.baseUrl + "/img/" + tmp.getSymbol().toLowerCase() + ".png";
+            Picasso.with(holder.icon.getContext()).load(imageUrl)
+                    .centerCrop()
+                    .fit()
+                    .into(holder.icon);
         } else {
             Toast.makeText(app.getApplicationContext(), "null"+position, Toast.LENGTH_SHORT).show();
         }

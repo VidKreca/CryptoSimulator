@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(String message) {
-                Toast.makeText(getBaseContext(), "Could not retrieve list of cryptocurrencies.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Could not retrieve list of cryptocurrencies.\n"+message, Toast.LENGTH_LONG).show();
             }
         });
     }
