@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -43,7 +44,12 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CryptocurrencyAdapter(app, new CryptocurrencyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
+                String symbol_query = app.GetStore().GetAtIndex(position).getSymbol();
 
+                Intent i = new Intent(getBaseContext(), SingleActivity.class);
+                i.putExtra("symbol", symbol_query);
+
+                startActivity(i);
             }
             @Override
             public void onItemLongClick(View itemView, int position) {
