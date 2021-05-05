@@ -60,4 +60,9 @@ public class API {
     public void GetList(final VolleyCallBack callback) {
         MakeRequest("currencies/list/", callback);
     }
+
+    public void GetSingle(final VolleyCallBack callback, String symbol) {
+        String endpoint = "currencies/"+symbol;
+        MakeRequest(endpoint, callback);
+    }
 }

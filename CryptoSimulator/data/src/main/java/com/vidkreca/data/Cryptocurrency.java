@@ -36,4 +36,34 @@ public class Cryptocurrency {
         // Build an object from a json string that we retrieve from our API
         return gson.fromJson(json, Cryptocurrency.class);
     }
+
+
+
+    /*
+    * =============== Getters & Setters ===================
+    * */
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
