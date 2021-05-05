@@ -99,7 +99,7 @@ router.get("/currencies/:symbol/:fiat?", async (req, res) => {
 		timestamp: (new Date()).getTime(),		// Milliseconds since 1970
 		fiat: req.params.fiat,
 		price: price,
-		symbol: symbol, 
+		symbol: symbol,
 		name: name
 	};
 
