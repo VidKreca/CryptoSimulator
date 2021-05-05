@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.vidkreca.data.ProtocolMessages.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private API api;
@@ -20,17 +22,16 @@ public class MainActivity extends AppCompatActivity {
         api = new API(getApplicationContext());
 
         tv = findViewById(R.id.textView);
-        tv.setText("loaded");
     }
 
 
     public void onButtonClick(View v) {
-        tv.setText("clicked");
-
         api.GetList(new VolleyCallBack() {
             @Override
             public void onSuccess(String json) {
-                tv.setText(json);
+                List response = API.gson.fromJson(json, List.class);
+
+                tv.setText(response.currencies[0].toString());
             }
 
             @Override

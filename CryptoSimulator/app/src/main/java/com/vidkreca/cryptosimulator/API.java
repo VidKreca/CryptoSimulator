@@ -9,7 +9,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.vidkreca.data.FiatCurrencies;
+
+
+
 
 
 public class API {
@@ -17,6 +21,7 @@ public class API {
     //final static String url = "http://localhost:3000/api/";
     final static String url = "http://10.0.2.2:3000/api/";
     private Context context;
+    static Gson gson = new Gson();
 
     // Crypto related
     public FiatCurrencies fiat = FiatCurrencies.EUR;
@@ -28,13 +33,11 @@ public class API {
 
     public API(Context context) {
         queue = Volley.newRequestQueue(context);
-
     }
 
 
-
-    public void GetList(final VolleyCallBack callback) {
-        String endpoint = API.url.concat("currencies/list/");
+    private void MakeRequest(String endpoint, final VolleyCallBack callback) {
+        endpoint = API.url.concat(endpoint);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
                     @Override
@@ -45,12 +48,16 @@ public class API {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Error response", endpoint);
-                        callback.onError("Error response at endpoint: "+endpoint+"\n"+error.getMessage());
+                        callback.onError("Error response: "+error.getMessage());
                     }
                 }
         );
-
         queue.add(stringRequest);
+    }
+
+
+
+    public void GetList(final VolleyCallBack callback) {
+        MakeRequest("currencies/list/", callback);
     }
 }
