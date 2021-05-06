@@ -1,6 +1,10 @@
 package com.vidkreca.cryptosimulator;
 
-public interface VolleyCallBack {
+import org.json.JSONObject;
+
+public interface VolleyCallback {
     void onSuccess(String json);
     void onError(String message);
 }
+
+

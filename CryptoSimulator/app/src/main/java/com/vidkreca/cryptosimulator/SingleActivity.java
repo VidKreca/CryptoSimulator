@@ -41,7 +41,7 @@ public class SingleActivity extends AppCompatActivity {
 
 
     private void GetData() {
-        api.GetSingle(new VolleyCallBack() {
+        api.GetSingle(new VolleyCallback() {
             @Override
             public void onSuccess(String json) {
                 Single response = API.gson.fromJson(json, Single.class);

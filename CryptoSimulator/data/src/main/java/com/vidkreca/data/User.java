@@ -4,14 +4,15 @@ package com.vidkreca.data;
 import java.util.ArrayList;
 
 public class User {
-    private int id;
-    private String username;
-    private String email;
+    private String id;
+    private String uuid;
 
-    private double balanceFiat;
+    private double balance;
     private ArrayList<Trade> trades;
 
-    public User(int id, String username, String email) {
-        // ...
+    public User(String id, String uuid, double balance) {
+        this.id = id;
+        this.uuid = uuid;
+        this.balance = balance;
     }
 }
