@@ -1,6 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const apiInterface = require("../utils/apiInterface");
+const options = require("../options.json");
 
 /*
 	Base URL: /api/*
@@ -8,16 +9,8 @@ const apiInterface = require("../utils/apiInterface");
 
 
 // API config
-const validFiatCurrencies   = ["EUR", "USD"];
-const validCryptoCurrencies = [
-	{symbol: "BTC", name: "Bitcoin"}, 
-	{symbol: "ETH", name: "Ethereum"}, 
-	{symbol: "LTC", name: "Litecoin"},
-	{symbol: "USDT", name: "Tether"},
-	{symbol: "ADA", name: "Cardano"},
-	{symbol: "XLM", name: "Stellar Lumens"}
-];
-
+const validFiatCurrencies   = options.validFiatCurrencies;
+const validCryptoCurrencies = options.validCryptoCurrencies;
 
 
 

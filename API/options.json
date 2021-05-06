@@ -1,0 +1,18 @@
+{
+	"validFiatCurrencies":   ["EUR","USD"],
+
+	"validCryptoCurrencies": [
+		{"symbol": "BTC", "name": "Bitcoin"}, 
+		{"symbol": "ETH"," name": "Ethereum"}, 
+		{"symbol": "LTC", "name": "Litecoin"},
+		{"symbol": "USDT", "name": "Tether"},
+		{"symbol": "ADA", "name": "Cardano"},
+		{"symbol": "XLM", "name": "Stellar Lumens"}
+	],
+
+	"startingDifficulties": [
+		{"difficulty": "easy", "balance": 10000},
+		{"difficulty": "medium", "balance": 1000},
+		{"difficulty": "hard", "balance": 100}
+	]
+}
