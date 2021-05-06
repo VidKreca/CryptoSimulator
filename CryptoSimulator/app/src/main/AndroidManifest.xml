@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CryptoSimulator"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SingleActivity"></activity>
+        <activity android:name=".DifficultyActivity"></activity>
+        <activity android:name=".SingleActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,8 +7,12 @@ const mongoose = require("mongoose");
 const app = express();
 
 
+// Import options.json
+const options = require("./options.json");
+
+
 // Import routers
-const apiRouter = require("./routes/apiRoutes");
+const currencyRouter = require("./routes/currencyRoutes");
 const userRouter = require("./routes/userRoutes");
 const tradeRouter = require("./routes/tradeRoutes");
 
@@ -28,9 +32,20 @@ db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 
 // Use routers
-app.use("/api/", apiRouter);
+app.use("/currency/", currencyRouter);
 app.use("/user/", userRouter);
 app.use("/trade/", tradeRouter);
+
+
+// Options endpoint
+app.use("/options", (req, res) => {
+	let data = {
+		success: true,
+		startingDifficulties: options.startingDifficulties
+	};
+
+	res.status(200).json(data);
+});
 
 
 // Serve static icons, serve missing.png for invalid file names

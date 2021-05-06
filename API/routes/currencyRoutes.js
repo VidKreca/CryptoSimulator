@@ -15,7 +15,7 @@ const validCryptoCurrencies = options.validCryptoCurrencies;
 
 
 // Get all crypto currencies
-router.get("/currencies/list/:fiat?", async (req, res) => {
+router.get("/list/:fiat?", async (req, res) => {
 
 	// Set default FIAT currency to EUR
 	if (!req.params.fiat)
@@ -59,7 +59,7 @@ router.get("/currencies/list/:fiat?", async (req, res) => {
 
 
 // Get single crypto currency
-router.get("/currencies/:symbol/:fiat?", async (req, res) => {
+router.get("/:symbol/:fiat?", async (req, res) => {
 
 	// Set default FIAT currency to EUR
 	if (!req.params.fiat)

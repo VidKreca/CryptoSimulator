@@ -18,8 +18,7 @@ import com.vidkreca.data.FiatCurrencies;
 
 public class API {
     // API related
-    final static String baseUrl = "http://10.0.2.2:3000";
-    final static String url = baseUrl + "/api/";
+    final static String url = "http://10.0.2.2:3000";
     private Context context;
     static Gson gson = new Gson();
 
@@ -36,7 +35,7 @@ public class API {
     }
 
 
-    private void MakeRequest(String endpoint, final VolleyCallBack callback) {
+    private void MakeGetRequest(String endpoint, final VolleyCallBack callback) {
         endpoint = API.url.concat(endpoint);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
@@ -58,11 +57,16 @@ public class API {
 
 
     public void GetList(final VolleyCallBack callback) {
-        MakeRequest("currencies/list/", callback);
+        MakeGetRequest("/currency/list/", callback);
     }
 
     public void GetSingle(final VolleyCallBack callback, String symbol) {
-        String endpoint = "currencies/"+symbol;
-        MakeRequest(endpoint, callback);
+        String endpoint = "/currency/"+symbol;
+        MakeGetRequest(endpoint, callback);
+    }
+
+    public void GetOptions(final VolleyCallBack callback) {
+        String endpoint = "/options/";
+        MakeGetRequest(endpoint, callback);
     }
 }

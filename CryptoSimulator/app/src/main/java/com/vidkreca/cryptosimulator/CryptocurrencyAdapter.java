@@ -55,7 +55,7 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
             holder.price.setText(Double.toString(tmp.getPrice()) + "€");    // TODO - change € to selected FIAT
 
             // Load icon image into imageview using Picasso
-            String imageUrl = API.baseUrl + "/img/" + tmp.getSymbol().toLowerCase() + ".png";
+            String imageUrl = API.url + "/img/" + tmp.getSymbol().toLowerCase() + ".png";
             Picasso.with(holder.icon.getContext()).load(imageUrl)
                     .centerCrop()
                     .fit()
