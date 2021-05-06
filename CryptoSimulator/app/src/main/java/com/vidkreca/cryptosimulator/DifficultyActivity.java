@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -56,6 +57,12 @@ public class DifficultyActivity extends AppCompatActivity {
                 Difficulty chosenDifficulty = difficulties.get(position);
 
                 Toast.makeText(getBaseContext(), "Chosen difficulty: "+chosenDifficulty.difficulty, Toast.LENGTH_LONG).show();
+
+                try {
+                    ChooseDifficulty(chosenDifficulty);
+                } catch (JSONException ex) {
+                    Log.e("CryptoSimulator", ex.getMessage());
+                }
             }
         });
 
@@ -103,7 +110,7 @@ public class DifficultyActivity extends AppCompatActivity {
                 app.SetUser(u);
 
                 // After successfully setting our User object, return to MainActivity
-                // TODO ...
+                finish();
             }
 
             @Override

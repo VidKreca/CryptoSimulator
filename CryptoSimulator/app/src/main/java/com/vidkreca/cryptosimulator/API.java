@@ -1,6 +1,7 @@
 package com.vidkreca.cryptosimulator;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,6 +13,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.vidkreca.data.FiatCurrencies;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -60,7 +62,11 @@ public class API {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess(response);
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException ex) {
+                            Log.e("CryptoSimulator", ex.getMessage());
+                        }
                     }
                 },
                 new Response.ErrorListener() {

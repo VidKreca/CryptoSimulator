@@ -47,4 +47,14 @@ public class App extends Application {
     public Store GetStore() {
         return store;
     }
+
+
+
+
+    /*
+    * ===================== DEBUGGING ===================
+    * */
+    public void ResetUUID() {
+        sp.edit().remove(UUID_SP_KEY).commit();
+    }
 }
