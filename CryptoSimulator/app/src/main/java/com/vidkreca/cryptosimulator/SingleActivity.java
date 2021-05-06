@@ -27,8 +27,8 @@ public class SingleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single);
 
-        api = new API(getApplicationContext());
         app = (App)getApplication();
+        api = app.GetApi();
         symbol_query = getIntent().getExtras().getString("symbol");
 
         // Assign UI elements

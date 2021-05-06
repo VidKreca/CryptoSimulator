@@ -4,17 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.vidkreca.data.ProtocolMessages.Difficulty;
-import com.vidkreca.data.ProtocolMessages.List;
 import com.vidkreca.data.ProtocolMessages.Options;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class DifficultyActivity extends AppCompatActivity {
 
@@ -32,22 +31,45 @@ public class DifficultyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_difficulty);
 
         app = (App)getApplication();
-        api = new API(getApplicationContext());
+        api = app.GetApi();
+
+        difficulties = new ArrayList<>();
 
         // Assign UI elements
         difficulty_rv = findViewById(R.id.difficulty_recyclerview);
 
+        InitAdapter();
         GetData();
     }
 
 
+    private void InitAdapter() {
+        adapter = new DifficultyAdapter(app, difficulties, new DifficultyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                Difficulty chosenDifficulty = difficulties.get(position);
+
+                Toast.makeText(getBaseContext(), "Chosen difficulty: "+chosenDifficulty.difficulty, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        difficulty_rv.setAdapter(adapter);
+        difficulty_rv.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
     private void GetData() {
-        api.GetList(new VolleyCallBack() {
+        api.GetOptions(new VolleyCallBack() {
             @Override
             public void onSuccess(String json) {
                 Options response = API.gson.fromJson(json, Options.class);
 
-                difficulties = new ArrayList<>(Arrays.asList(response.startingDifficulties));
+                difficulties.clear();
+                difficulties.addAll(Arrays.asList(response.startingDifficulties));
+
+                adapter.notifyDataSetChanged();
+
+                //Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -58,15 +80,12 @@ public class DifficultyActivity extends AppCompatActivity {
     }
 
 
-    private void InitAdapter() {
-        adapter = new DifficultyAdapter(app, (Difficulty[])difficulties.toArray(), new DifficultyAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                Difficulty chosenDifficulty = difficulties.get(position);
-            }
-        });
+    private void ChooseDifficulty() {
+        // Generate UUID & save it to SharedPreferences
+        
 
-        difficulty_rv.setAdapter(adapter);
-        difficulty_rv.setLayoutManager(new LinearLayoutManager(this));
+        // Send account creation POST request and get our user object
+
+
     }
 }

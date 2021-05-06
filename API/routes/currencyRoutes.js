@@ -49,6 +49,7 @@ router.get("/list/:fiat?", async (req, res) => {
 		currencies: currencies
 	};
 
+
 	return res.status(200).json(data);
 });
 

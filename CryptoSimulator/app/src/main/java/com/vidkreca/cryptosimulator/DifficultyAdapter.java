@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-import com.vidkreca.data.Cryptocurrency;
 import com.vidkreca.data.ProtocolMessages.Difficulty;
+
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,9 +18,9 @@ public class DifficultyAdapter extends RecyclerView.Adapter<DifficultyAdapter.Vi
 
     private App app;
     private DifficultyAdapter.OnItemClickListener listener;
-    private Difficulty[] difficulties;
+    private ArrayList<Difficulty> difficulties;
 
-    public DifficultyAdapter(App app, Difficulty[] difficulties, DifficultyAdapter.OnItemClickListener listener) {
+    public DifficultyAdapter(App app, ArrayList<Difficulty> difficulties, DifficultyAdapter.OnItemClickListener listener) {
         this.app = app;
         this.listener = listener;
         this.difficulties = difficulties;
@@ -48,11 +48,11 @@ public class DifficultyAdapter extends RecyclerView.Adapter<DifficultyAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull DifficultyAdapter.ViewHolder holder, int position) {
 
-        Difficulty tmp = difficulties[position];
+        Difficulty tmp = difficulties.get(position);
 
         // Set Difficulty views values
         if (tmp != null) {
-            holder.difficulty.setText(tmp.difficulty);
+            holder.difficulty.setText(tmp.difficulty.toUpperCase());
             holder.startingBalance.setText(tmp.balance + "€");    // TODO - change € to selected FIAT
         } else {
             Toast.makeText(app.getApplicationContext(), "null"+position, Toast.LENGTH_SHORT).show();
@@ -61,7 +61,7 @@ public class DifficultyAdapter extends RecyclerView.Adapter<DifficultyAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return difficulties.length;
+        return difficulties.size();
     }
 
 

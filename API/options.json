@@ -3,7 +3,7 @@
 
 	"validCryptoCurrencies": [
 		{"symbol": "BTC", "name": "Bitcoin"}, 
-		{"symbol": "ETH"," name": "Ethereum"}, 
+		{"symbol": "ETH","name": "Ethereum"}, 
 		{"symbol": "LTC", "name": "Litecoin"},
 		{"symbol": "USDT", "name": "Tether"},
 		{"symbol": "ADA", "name": "Cardano"},

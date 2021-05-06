@@ -28,8 +28,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        api = new API(getApplicationContext());
         app = (App)getApplication();
+        api = app.GetApi();
+
+        // If this is the first startup, start the DifficultyActivity
+        if (app.IsFirstStart()) {
+            Intent i = new Intent(this, DifficultyActivity.class);
+            startActivity(i);
+        }
+
 
         // Assign UI elements
         crypto_rv = findViewById(R.id.crypto_recyclerview);
