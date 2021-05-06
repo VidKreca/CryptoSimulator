@@ -1,4 +1,5 @@
 var UserModel = require('../models/userModel.js');
+const options = require("../options.json");
 
 /**
  * userController.js
@@ -6,22 +7,6 @@ var UserModel = require('../models/userModel.js');
  * @description :: Server-side logic for managing users.
  */
 module.exports = {
-
-    /**
-     * userController.list()
-     */
-    list: function (req, res) {
-        UserModel.find(function (err, users) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when getting user.',
-                    error: err
-                });
-            }
-
-            return res.json(users);
-        });
-    },
 
     /**
      * userController.show()
@@ -51,10 +36,18 @@ module.exports = {
      * userController.create()
      */
     create: function (req, res) {
+
+        // Check if starting balance is one of the defined starting balances
+        let found = options.startingDifficulties.find(x => x.balance == req.body.starting_balance);
+        if (found == undefined) {
+            return res.status(400).json({success: false, message: "Invalid starting balance."});
+        }
+
+
         var user = new UserModel({
 			uuid : req.body.uuid,
 			starting_balance : req.body.starting_balance,
-			balance : req.body.balance
+			balance : req.body.starting_balance
         });
 
         user.save(function (err, user) {
@@ -103,24 +96,6 @@ module.exports = {
 
                 return res.json(user);
             });
-        });
-    },
-
-    /**
-     * userController.remove()
-     */
-    remove: function (req, res) {
-        var id = req.params.id;
-
-        UserModel.findByIdAndRemove(id, function (err, user) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Error when deleting the user.',
-                    error: err
-                });
-            }
-
-            return res.status(204).json();
         });
     }
 };

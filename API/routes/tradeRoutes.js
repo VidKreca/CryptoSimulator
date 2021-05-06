@@ -17,16 +17,6 @@ router.get('/:id', tradeController.show);
  */
 router.post('/', tradeController.create);
 
-/*
- * PUT
- */
-router.put('/:id', tradeController.update);
-
-/*
- * DELETE
- */
-router.delete('/:id', tradeController.remove);
-
 
 
 module.exports = router;
