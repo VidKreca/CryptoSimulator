@@ -8,9 +8,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vidkreca.data.ProtocolMessages.List;
+import com.vidkreca.data.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private CryptocurrencyAdapter adapter;
 
     private RecyclerView crypto_rv;
+    private TextView balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +32,34 @@ public class MainActivity extends AppCompatActivity {
         api = app.GetApi();
 
         // Debugging, remove UUID from SharedPreferences
-        app.ResetUUID();
+        //app.ResetUUID();
 
         // If this is the first startup, start the DifficultyActivity
         if (app.IsFirstStart()) {
             Intent i = new Intent(this, DifficultyActivity.class);
             startActivity(i);
+        } else {
+            // Assign UI elements
+            crypto_rv = findViewById(R.id.crypto_recyclerview);
+            balance = findViewById(R.id.balance);
+
+            GetData(null);
+            GetUser();
+            InitAdapter();
+            InitSwipeToRefresh();
         }
+    }
 
 
-        // Assign UI elements
-        crypto_rv = findViewById(R.id.crypto_recyclerview);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        GetData(null);
-        InitAdapter();
-        InitSwipeToRefresh();
+        // This might be really slowing down the app, remove if necessary
+        if (app.IsFirstStart()) {
+            Intent i = new Intent(this, DifficultyActivity.class);
+            startActivity(i);
+        }
     }
 
 
@@ -93,12 +109,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void GetUser() {
+        String uuid = app.GetUUID();
+
+        // Do not perform request if uuid is null
+        if (uuid == null)
+            return;
+
+        api.GetUser(new VolleyCallback() {
+            @Override
+            public void onSuccess(String json) {
+                User response = API.gson.fromJson(json, User.class);
+                app.SetUser(response);
+
+                // Update UI
+                String balanceStr = Double.toString(app.GetUser().getBalance()) + "€";  // TODO - add different fiat symbols
+                balance.setText(balanceStr);
+            }
+
+            @Override
+            public void onError(String message) {
+                Toast.makeText(getBaseContext(), "Could not retrieve user.\n"+message, Toast.LENGTH_LONG).show();
+            }
+        }, uuid);
+    }
+
+
     private void InitSwipeToRefresh() {
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 GetData(pullToRefresh);
+                GetUser();
             }
         });
     }

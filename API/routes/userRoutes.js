@@ -6,7 +6,7 @@ var userController = require('../controllers/userController.js');
 /*
  * GET
  */
-router.get('/:id', userController.show);
+router.get('/:uuid', userController.show);
 
 /*
  * POST

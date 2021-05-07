@@ -97,4 +97,9 @@ public class API {
     public void CreateAccount(final VolleyJsonCallback callback, JSONObject data) {
         MakePostRequest("/user/", data, callback);
     }
+
+    public void GetUser(final VolleyCallback callback, String uuid) {
+        String endpoint = "/user/" + uuid;
+        MakeGetRequest(endpoint, callback);
+    }
 }

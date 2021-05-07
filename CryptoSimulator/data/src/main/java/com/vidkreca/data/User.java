@@ -15,4 +15,9 @@ public class User {
         this.uuid = uuid;
         this.balance = balance;
     }
+
+
+    public double getBalance() {
+        return balance;
+    }
 }

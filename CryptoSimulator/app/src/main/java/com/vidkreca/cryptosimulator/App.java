@@ -37,9 +37,16 @@ public class App extends Application {
     public void SetUUID(String uuid) {
         sp.edit().putString(UUID_SP_KEY, uuid).apply();     // Note - might want to use .commit here instead
     }
+    public String GetUUID() {
+        return sp.getString(UUID_SP_KEY, null);
+    }
 
     public void SetUser(User user) {
         this.user = user;
+    }
+
+    public User GetUser() {
+        return user;
     }
 
 
