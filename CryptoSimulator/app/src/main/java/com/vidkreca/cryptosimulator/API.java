@@ -58,7 +58,7 @@ public class API {
 
     private void MakePostRequest(String endpoint, JSONObject data, final VolleyJsonCallback callback) {
         endpoint = API.url.concat(endpoint);
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, endpoint, data,
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, endpoint, data,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -76,7 +76,7 @@ public class API {
                     }
                 }
         );
-        queue.add(stringRequest);
+        queue.add(jsonRequest);
     }
 
 
@@ -94,12 +94,16 @@ public class API {
         MakeGetRequest("/options/", callback);
     }
 
+    public void GetUser(final VolleyCallback callback, String uuid) {
+        String endpoint = "/user/" + uuid;
+        MakeGetRequest(endpoint, callback);
+    }
+
     public void CreateAccount(final VolleyJsonCallback callback, JSONObject data) {
         MakePostRequest("/user/", data, callback);
     }
 
-    public void GetUser(final VolleyCallback callback, String uuid) {
-        String endpoint = "/user/" + uuid;
-        MakeGetRequest(endpoint, callback);
+    public void CreateTrade(final VolleyJsonCallback callback, JSONObject data) {
+        MakePostRequest("/trade/", data, callback);
     }
 }

@@ -14,10 +14,20 @@ public class User {
         this.id = id;
         this.uuid = uuid;
         this.balance = balance;
+
+        trades = new ArrayList<>();
     }
 
 
     public double getBalance() {
         return balance;
+    }
+
+    public void AddTrade(Trade t) {
+        if (trades == null)
+            trades = new ArrayList<>();
+
+        trades.add(t);
+        balance -= t.fiat_value;
     }
 }

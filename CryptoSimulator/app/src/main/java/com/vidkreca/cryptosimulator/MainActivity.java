@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView crypto_rv;
     private TextView balance;
+    private SwipeRefreshLayout pullToRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +33,28 @@ public class MainActivity extends AppCompatActivity {
         api = app.GetApi();
 
         // Debugging, remove UUID from SharedPreferences
-        //app.ResetUUID();
+        app.ResetUUID();
+
+        // Assign UI elements
+        crypto_rv = findViewById(R.id.crypto_recyclerview);
+        balance = findViewById(R.id.balance);
 
         // If this is the first startup, start the DifficultyActivity
         if (app.IsFirstStart()) {
             Intent i = new Intent(this, DifficultyActivity.class);
             startActivity(i);
-        } else {
-            // Assign UI elements
-            crypto_rv = findViewById(R.id.crypto_recyclerview);
-            balance = findViewById(R.id.balance);
-
-            GetData(null);
-            GetUser();
-            InitAdapter();
-            InitSwipeToRefresh();
         }
+
+        InitialSetup();
+    }
+
+
+    private void InitialSetup() {
+        InitSwipeToRefresh();
+        pullToRefresh.setRefreshing(true);
+        GetData(pullToRefresh);
+        GetUser();
+        InitAdapter();
     }
 
 
@@ -55,11 +62,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // This might be really slowing down the app, remove if necessary
-        if (app.IsFirstStart()) {
-            Intent i = new Intent(this, DifficultyActivity.class);
-            startActivity(i);
-        }
+        UpdateBalance();
     }
 
 
@@ -123,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 app.SetUser(response);
 
                 // Update UI
-                String balanceStr = Double.toString(app.GetUser().getBalance()) + "€";  // TODO - add different fiat symbols
-                balance.setText(balanceStr);
+                UpdateBalance();
             }
 
             @Override
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void InitSwipeToRefresh() {
-        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh = findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -144,5 +146,11 @@ public class MainActivity extends AppCompatActivity {
                 GetUser();
             }
         });
+    }
+
+
+    private void UpdateBalance() {
+        String balanceStr = Double.toString(app.GetUser().getBalance()) + "€";  // TODO - add different fiat symbols
+        balance.setText(balanceStr);
     }
 }
