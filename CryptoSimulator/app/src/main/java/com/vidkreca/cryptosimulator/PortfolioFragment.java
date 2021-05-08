@@ -72,6 +72,12 @@ public class PortfolioFragment extends Fragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        GetUser();
+    }
+
     /**
      * Call all initialization methods, get all data.
      */
@@ -113,7 +119,7 @@ public class PortfolioFragment extends Fragment {
         app.RefreshUser(new RefreshCallback() {
             @Override
             public void onRefresh() {
-                UpdateBalance();
+                Update();
             }
         });
     }
@@ -122,13 +128,17 @@ public class PortfolioFragment extends Fragment {
     /**
      * Update the users fiat balance value.
      */
-    private void UpdateBalance() {
-        // Calculate portfolio value
+    private void Update() {
+        // Update portfolio value
         double sum = app.GetUser().GetPortfolioValue();
         String portfolioValueStr = String.format("%.2f€", sum);
         portfolioValue.setText(portfolioValueStr);
 
+        // Update balance value
         String balanceStr = String.format("%.2f€", app.GetUser().getBalance());
         balance.setText(balanceStr);
+
+        // Update portfolio items
+        adapter.notifyDataSetChanged();
     }
 }

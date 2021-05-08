@@ -1,6 +1,8 @@
 package com.vidkreca.cryptosimulator;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +38,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
         // Create an LayoutInflater object from parent context
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View view = inflater.inflate(R.layout.cryptocurrency, parent, false);
+        View view = inflater.inflate(R.layout.portfolio_item, parent, false);
 
         PortfolioAdapter.ViewHolder viewHolder = new PortfolioAdapter.ViewHolder(view);
 
@@ -49,12 +51,20 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
         PortfolioItem tmp = app.GetUser().GetPortfolio()[position];
 
-        // Set Cryptocurrency views values
+        // Set portfolio_item views values
         if (tmp != null) {
-            holder.name.setText("empty");
+
             holder.symbol.setText(tmp.crypto_symbol);
-            String priceStr = String.format("%.2f€", tmp.fiat_worth);   // TODO - change € to selected FIAT
-            holder.price.setText(priceStr);
+            holder.amount.setText(String.format("%.10f", tmp.crypto_amount));
+            holder.worth.setText(String.format("%.2f€", tmp.fiat_worth));
+
+            double percentageChange = tmp.GetPercentageChange();
+            holder.percentage.setText(String.format("%.2f%%", percentageChange));
+            if (percentageChange < 100) {
+                holder.percentage.setTextColor(Color.RED);
+            } else {
+                holder.percentage.setTextColor(Color.GREEN);
+            }
 
             // Load icon image into ImageView using Picasso
             String imageUrl = API.url + "/img/" + tmp.crypto_symbol.toLowerCase() + ".png";
@@ -62,6 +72,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
                     .centerCrop()
                     .fit()
                     .into(holder.icon);
+
         } else {
             Toast.makeText(app.getApplicationContext(), "null"+position, Toast.LENGTH_SHORT).show();
         }
@@ -77,18 +88,20 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView icon;
-        public TextView name;
         public TextView symbol;
-        public TextView price;
+        public TextView amount;
+        public TextView worth;
+        public TextView percentage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // Get UI elements
-            name = itemView.findViewById(R.id.crypto_name);
-            symbol = itemView.findViewById(R.id.crypto_symbol);
-            price = itemView.findViewById(R.id.crypto_price);
             icon = itemView.findViewById(R.id.crypto_icon);
+            symbol = itemView.findViewById(R.id.crypto_symbol);
+            amount = itemView.findViewById(R.id.crypto_amount);
+            worth = itemView.findViewById(R.id.crypto_worth);
+            percentage = itemView.findViewById(R.id.crypto_percentage);
 
             itemView.setOnClickListener(view -> {
                 if (listener != null) {

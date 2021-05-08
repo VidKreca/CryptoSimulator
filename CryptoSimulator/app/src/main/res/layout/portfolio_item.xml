@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/crypto_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:padding="@dimen/padding_small"
 
         android:contentDescription="Cryptocurrency logo"
@@ -28,29 +28,49 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/crypto_name"
-            android:text="Cryptocurrency"
+            android:id="@+id/crypto_symbol"
+            android:text="CC"
             android:textColor="@color/secondaryDark"
             android:textSize="@dimen/font_size_normal"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/crypto_symbol"
-            android:text="CC"
+            android:id="@+id/crypto_amount"
+            android:text="0"
             android:textSize="@dimen/font_size_small"
             android:textColor="@color/secondary"/>
 
     </LinearLayout>
 
-    <TextView
+
+
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/crypto_price"
-        android:text="0€"
-        android:textSize="@dimen/font_size_normal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/crypto_worth"
+            android:text="0€"
+            android:textSize="@dimen/font_size_normal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/crypto_percentage"
+            android:text="0%"
+            android:textSize="@dimen/font_size_normal" />
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

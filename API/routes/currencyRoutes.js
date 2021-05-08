@@ -27,7 +27,6 @@ router.get("/list/:fiat?", async (req, res) => {
 			message: "Invalid FIAT currency symbol. Valid: " + validFiatCurrencies
 		});
 
-
 	// Fetch all product prices
 	let currencies = []
 	for (let i = 0; i < validCryptoCurrencies.length; i++) {
@@ -39,7 +38,6 @@ router.get("/list/:fiat?", async (req, res) => {
 			price: price
 		});
 	}
-
 
 	// Build data object to return
 	let data = {
