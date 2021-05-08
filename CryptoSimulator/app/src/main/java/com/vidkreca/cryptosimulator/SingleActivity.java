@@ -69,7 +69,7 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     public void OnClickBuy(View v) {
         // Open trade dialog if the user has balance to use
         if (app.GetUser().getBalance() >= 1) {
-            TradeDialog dialog = new TradeDialog((int)app.GetUser().getBalance(), "buy");
+            TradeDialog dialog = new TradeDialog((int)app.GetUser().getBalance(), "buy", getApplicationContext());
             dialog.show(getSupportFragmentManager(), "Trade");
         } else {
             Toast.makeText(getBaseContext(), "You're too broke.", Toast.LENGTH_LONG).show();
@@ -81,7 +81,7 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         PortfolioItem p = app.GetUser().GetPortfolioItem(crypto.getSymbol());
 
         if (p != null) {
-            TradeDialog dialog = new TradeDialog(p.fiat_worth, "sell");
+            TradeDialog dialog = new TradeDialog(p.fiat_worth, "sell", getApplicationContext());
             dialog.show(getSupportFragmentManager(), "Trade");
         } else {
             // Shouldn't be reached...

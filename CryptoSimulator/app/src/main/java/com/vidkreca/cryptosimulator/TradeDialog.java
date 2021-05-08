@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -19,10 +21,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 public class TradeDialog extends AppCompatDialogFragment {
 
     private EditText amountFiat;
     private SeekBar seekBar;
+    private Context context;
 
     // Values for the amount of fiat to trade
     private final double min = 1;
@@ -34,9 +39,10 @@ public class TradeDialog extends AppCompatDialogFragment {
     private TradeDialogListener listener;
 
 
-    public TradeDialog(double max, String type) {
+    public TradeDialog(double max, String type, Context context) {
         this.max = max;
         this.type = type;
+        this.context = context;
     }
 
     @NonNull
@@ -101,6 +107,11 @@ public class TradeDialog extends AppCompatDialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
 
+        // Focus the EditText and open the keyboard
+        amountFiat.requestFocus();
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
         return builder.create();
     }
 
@@ -112,6 +123,15 @@ public class TradeDialog extends AppCompatDialogFragment {
         listener = (TradeDialogListener) context;
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // Close keyboard
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
 
     public interface TradeDialogListener {
         void getResult(double amount, String type);
