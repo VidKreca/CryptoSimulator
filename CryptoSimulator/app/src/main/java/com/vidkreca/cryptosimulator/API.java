@@ -125,6 +125,16 @@ public class API {
     }
 
     /**
+     * Get all trades for a uuid
+     * @param callback callback object
+     * @param uuid user's uuid
+     */
+    public void GetTrades(final VolleyCallback callback, String uuid) {
+        String endpoint = "/trade/"+uuid;
+        MakeGetRequest(endpoint, callback);
+    }
+
+    /**
      * Create a new user account.
      * @param callback callback object
      * @param data JSON body with user info.

@@ -29,23 +29,17 @@ module.exports = {
      * tradeController.show()
      */
     show: function (req, res) {
-        var id = req.params.id;
+        var uuid = req.params.uuid;
 
-        TradeModel.findOne({_id: id}, function (err, trade) {
+        TradeModel.find({uuid: uuid}, function (err, trades) {
             if (err) {
                 return res.status(500).json({
-                    message: 'Error when getting trade.',
+                    message: 'Error when getting trades by uuid.',
                     error: err
                 });
             }
 
-            if (!trade) {
-                return res.status(404).json({
-                    message: 'No such trade'
-                });
-            }
-
-            return res.json(trade);
+            return res.json(trades);
         });
     },
 

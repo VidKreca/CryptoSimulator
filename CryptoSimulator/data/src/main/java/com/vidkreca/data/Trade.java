@@ -5,6 +5,7 @@ package com.vidkreca.data;
 * */
 public class Trade {
 
+    public String _id;
     public String uuid;
     public String type;
     public double fiat_value;

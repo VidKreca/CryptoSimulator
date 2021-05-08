@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.Volley;
 import com.vidkreca.data.Store;
 import com.vidkreca.data.Trade;
 import com.vidkreca.data.User;
@@ -36,6 +37,31 @@ public class App extends Application {
         // Default empty user to avoid null pointer exceptions
         user = new User("undefined_id", "undefined_uuid", 0);
     }
+
+
+    public void RefreshUser(RefreshCallback callback) {
+        String uuid = this.GetUUID();
+
+        if (uuid == null)
+            return;
+
+        api.GetUser(new VolleyCallback() {
+            @Override
+            public void onSuccess(String json) {
+                User response = API.gson.fromJson(json, User.class);
+                SetUser(response);
+
+                callback.onRefresh();
+            }
+
+            @Override
+            public void onError(String message) {
+                Toast.makeText(getApplicationContext(), "Could not retrieve user.", Toast.LENGTH_LONG).show();
+            }
+        }, uuid);
+    }
+
+
 
 
     /**

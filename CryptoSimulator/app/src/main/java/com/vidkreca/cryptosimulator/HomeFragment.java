@@ -159,30 +159,16 @@ public class HomeFragment extends Fragment {
 
 
     /**
-     * Get User from the API.
+     * Refresh the user object.
      */
     private void GetUser() {
-        String uuid = app.GetUUID();
 
-        // Do not perform request if uuid is null
-        if (uuid == null)
-            return;
-
-        api.GetUser(new VolleyCallback() {
+        app.RefreshUser(new RefreshCallback() {
             @Override
-            public void onSuccess(String json) {
-                User response = API.gson.fromJson(json, User.class);
-                app.SetUser(response);
-
-                // Update UI
+            public void onRefresh() {
                 UpdateBalance();
             }
-
-            @Override
-            public void onError(String message) {
-                Toast.makeText(getContext(), "Could not retrieve user.\n"+message, Toast.LENGTH_LONG).show();
-            }
-        }, uuid);
+        });
     }
 
 

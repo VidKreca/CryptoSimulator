@@ -9,6 +9,7 @@ public class User {
 
     private double balance;
     private ArrayList<Trade> trades;
+    private PortfolioItem[] portfolio;
 
     public User(String id, String uuid, double balance) {
         this.id = id;
@@ -21,6 +22,9 @@ public class User {
 
     public double getBalance() {
         return balance;
+    }
+    public PortfolioItem[] GetPortfolio() {
+        return portfolio;
     }
 
     public void AddTrade(Trade t) {

@@ -10,7 +10,7 @@ router.get('/', tradeController.list);
 /*
  * GET
  */
-router.get('/:id', tradeController.show);
+router.get('/:uuid', tradeController.show);
 
 /*
  * POST
