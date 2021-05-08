@@ -19,7 +19,6 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     private String symbol_query;
 
     private TextView name;
-    private TextView symbol;
     private TextView price;
 
 
@@ -34,7 +33,6 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
 
         // Assign UI elements
         name = findViewById(R.id.name);
-        symbol = findViewById(R.id.symbol);
         price = findViewById(R.id.price);
 
         GetData();
@@ -50,7 +48,6 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
 
                 // Assign retrieved values to UI elements
                 name.setText(crypto.getName());
-                symbol.setText(crypto.getSymbol());
                 price.setText(Double.toString(crypto.getPrice()) + "€");    // TODO - consider currently selected FIAT currency
             }
 
@@ -62,9 +59,7 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     }
 
 
-    public void OnClickTrade(View v) {
-        Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
-
+    public void OnClickBuy(View v) {
         // Open trade dialog if the user has balance to use
         if (app.GetUser().getBalance() >= 1) {
             TradeDialog dialog = new TradeDialog((int)app.GetUser().getBalance());
@@ -74,11 +69,14 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         }
     }
 
+    public void OnClickSell(View v) {
+        Toast.makeText(getApplicationContext(), "Cannot sell yet. HODL", Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public void getResult(int amount) {
         // We get the fiat amount to purchase here, send POST request to server to complete trade
         app.CreateTrade(crypto.getSymbol(), "EUR", "buy", amount);
-        //Toast.makeText(getApplicationContext(), "Purchased "+amount+"€ of "+crypto.getSymbol(), Toast.LENGTH_SHORT).show();
     }
 }

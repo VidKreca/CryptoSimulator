@@ -81,7 +81,8 @@ public class TradeDialog extends AppCompatDialogFragment {
                     value = Integer.parseInt(s.toString());
                     if (value > max) {
                         value = max;
-                        amountFiat.setText(String.valueOf(value));
+                        String text = String.valueOf(value);
+                        amountFiat.setText(text);
                     }
                 } catch (Exception ex) {
                     value = 0;
@@ -93,8 +94,7 @@ public class TradeDialog extends AppCompatDialogFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
-
-
+        
         return builder.create();
     }
 
