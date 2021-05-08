@@ -29,6 +29,14 @@ public class HomeFragment extends Fragment {
     private App app;
     private API api;
 
+    private CryptocurrencyAdapter adapter;
+    private RecyclerView crypto_rv;
+    private TextView balance;
+    private SwipeRefreshLayout pullToRefresh;
+
+
+
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -75,32 +83,20 @@ public class HomeFragment extends Fragment {
         InitialSetup();
     }
 
+    /**
+     * Refresh data on activity resume.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        UpdateBalance();
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private CryptocurrencyAdapter adapter;
-    private RecyclerView crypto_rv;
-    private TextView balance;
-    private SwipeRefreshLayout pullToRefresh;
-
-
+    /**
+     * Call all initialization methods, get all data.
+     */
     private void InitialSetup() {
         InitSwipeToRefresh();
         pullToRefresh.setRefreshing(true);
@@ -110,14 +106,9 @@ public class HomeFragment extends Fragment {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        UpdateBalance();
-    }
-
-
+    /**
+     * Initialize the CryptocurrencyAdapter for the RecyclerView.
+     */
     private void InitAdapter() {
         adapter = new CryptocurrencyAdapter(app, new CryptocurrencyAdapter.OnItemClickListener() {
             @Override
@@ -140,6 +131,9 @@ public class HomeFragment extends Fragment {
     }
 
 
+    /**
+     * Get all cryptocurrency data.
+     */
     private void GetData(SwipeRefreshLayout pullToRefresh) {
         api.GetList(new VolleyCallback() {
             @Override
@@ -164,6 +158,9 @@ public class HomeFragment extends Fragment {
     }
 
 
+    /**
+     * Get User from the API.
+     */
     private void GetUser() {
         String uuid = app.GetUUID();
 
@@ -189,6 +186,9 @@ public class HomeFragment extends Fragment {
     }
 
 
+    /**
+     * Set onRefresh event handler for swipe.
+     */
     private void InitSwipeToRefresh() {
         pullToRefresh = getView().findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -201,6 +201,9 @@ public class HomeFragment extends Fragment {
     }
 
 
+    /**
+     * Update the users fiat balance value.
+     */
     private void UpdateBalance() {
         String balanceStr = Double.toString(app.GetUser().getBalance()) + "€";  // TODO - add different fiat symbols
         balance.setText(balanceStr);

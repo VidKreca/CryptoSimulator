@@ -33,12 +33,15 @@ public class App extends Application {
         store = new Store();
         sp = getApplicationContext().getSharedPreferences(SHARED_PREFERENCES_TAG, Context.MODE_PRIVATE);
 
-        // Default empty user
+        // Default empty user to avoid null pointer exceptions
         user = new User("undefined_id", "undefined_uuid", 0);
     }
 
 
-
+    /**
+     * Return true if the user hasn't chosen a difficulty and created his account yet.
+     * @return true if first start
+     */
     public boolean IsFirstStart() {
         return !sp.contains(UUID_SP_KEY);
     }
@@ -61,6 +64,13 @@ public class App extends Application {
     }
 
 
+    /**
+     * Creates a new trade. If server response is successfull it also adds it as a trade to the User object.
+     * @param symbol cryptocurrency symbol
+     * @param fiat "EUR"
+     * @param type "buy" or "sell"
+     * @param amount amount of fiat to spend
+     */
     public void CreateTrade(String symbol, String fiat, String type, double amount) {
         // Type should be "sell" or "buy"
         if (!type.equals("sell") && !type.equals("buy"))

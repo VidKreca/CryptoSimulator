@@ -18,16 +18,13 @@ import org.json.JSONObject;
 
 
 public class API {
-    // API related
+
+    // API url
     final static String url = "http://10.0.2.2:3000";
-    private Context context;
+
     static Gson gson = new Gson();
 
-    // Crypto related
-    public FiatCurrencies fiat = FiatCurrencies.EUR;
-
-
-    // Volley related
+    // Volley
     RequestQueue queue = null;
 
 
@@ -36,6 +33,11 @@ public class API {
     }
 
 
+    /**
+     * Makes a HTTP GET request to the provided endpoint.
+     * @param endpoint endpoint URL string to append to the API URL
+     * @param callback callback object
+     */
     private void MakeGetRequest(String endpoint, final VolleyCallback callback) {
         endpoint = API.url.concat(endpoint);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, endpoint,
@@ -56,6 +58,12 @@ public class API {
     }
 
 
+    /**
+     * Make a HTTP POST request with a JSON body to the provided endpoint.
+     * @param endpoint endpoint URL string to append to the API URL
+     * @param data JSON request body
+     * @param callback callback object
+     */
     private void MakePostRequest(String endpoint, JSONObject data, final VolleyJsonCallback callback) {
         endpoint = API.url.concat(endpoint);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, endpoint, data,
@@ -80,29 +88,56 @@ public class API {
     }
 
 
-
+    /**
+     * Get list of all available cryptocurrencies.
+     * @param callback callback object
+     */
     public void GetList(final VolleyCallback callback) {
         MakeGetRequest("/currency/list/", callback);
     }
 
+    /**
+     * Get all info about a single cryptocurrency.
+     * @param callback callback object
+     * @param symbol symbol of the cryptocurrency
+     */
     public void GetSingle(final VolleyCallback callback, String symbol) {
         String endpoint = "/currency/"+symbol;
         MakeGetRequest(endpoint, callback);
     }
 
+    /**
+     * Get app options: starting difficulties, more in the future.
+     * @param callback callback object
+     */
     public void GetOptions(final VolleyCallback callback) {
         MakeGetRequest("/options/", callback);
     }
 
+    /**
+     * Get user object using our UUID.
+     * @param callback callback object
+     * @param uuid app UUID string
+     */
     public void GetUser(final VolleyCallback callback, String uuid) {
         String endpoint = "/user/" + uuid;
         MakeGetRequest(endpoint, callback);
     }
 
+    /**
+     * Create a new user account.
+     * @param callback callback object
+     * @param data JSON body with user info.
+     */
     public void CreateAccount(final VolleyJsonCallback callback, JSONObject data) {
         MakePostRequest("/user/", data, callback);
     }
 
+    /**
+     * Create a new trade.
+     * @param callback callback object
+     * @param data JSON body with trade info.
+     */
     public void CreateTrade(final VolleyJsonCallback callback, JSONObject data) {
         MakePostRequest("/trade/", data, callback);
     }

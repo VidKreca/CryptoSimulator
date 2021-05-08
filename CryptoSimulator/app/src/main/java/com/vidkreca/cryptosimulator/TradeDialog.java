@@ -21,8 +21,9 @@ public class TradeDialog extends AppCompatDialogFragment {
     private EditText amountFiat;
     private SeekBar seekBar;
 
+    // Values for the amount of fiat to trade
     private final int min = 1;
-    private int max = min;
+    private int max;
     private int value = min;
 
     private TradeDialogListener listener;
@@ -94,7 +95,7 @@ public class TradeDialog extends AppCompatDialogFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
-        
+
         return builder.create();
     }
 

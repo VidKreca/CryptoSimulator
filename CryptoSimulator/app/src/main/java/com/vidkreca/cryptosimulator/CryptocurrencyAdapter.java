@@ -54,7 +54,7 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
             holder.symbol.setText(tmp.getSymbol());
             holder.price.setText(Double.toString(tmp.getPrice()) + "€");    // TODO - change € to selected FIAT
 
-            // Load icon image into imageview using Picasso
+            // Load icon image into ImageView using Picasso
             String imageUrl = API.url + "/img/" + tmp.getSymbol().toLowerCase() + ".png";
             Picasso.with(holder.icon.getContext()).load(imageUrl)
                     .centerCrop()
@@ -82,6 +82,7 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            // Get UI elements
             name = itemView.findViewById(R.id.crypto_name);
             symbol = itemView.findViewById(R.id.crypto_symbol);
             price = itemView.findViewById(R.id.crypto_price);
@@ -112,5 +113,4 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
         void onItemClick(View itemView, int position);
         void onItemLongClick(View itemView, int position);
     }
-
 }

@@ -4,20 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.vidkreca.data.ProtocolMessages.List;
-import com.vidkreca.data.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigation = findViewById(R.id.bottom_navigation);
 
+        // Set navigation bar event handlers
         BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -59,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         api = app.GetApi();
 
         // Debugging, remove UUID from SharedPreferences
-        app.ResetUUID();
+        //app.ResetUUID();
 
         // If this is the first startup, start the DifficultyActivity
         if (app.IsFirstStart()) {
@@ -67,12 +60,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         }
 
-        // Set HomeFragment as the default
+        // Open HomeFragment as the default fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.container,
                 new HomeFragment()).commit();
     }
 
 
+    /**
+     * Display a fragment in the MainActivity frame.
+     * @param fragment fragment to display
+     */
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment);

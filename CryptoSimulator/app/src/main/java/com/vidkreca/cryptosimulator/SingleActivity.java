@@ -39,6 +39,9 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     }
 
 
+    /**
+     * Get all data about this cryptocurrency.
+     */
     private void GetData() {
         api.GetSingle(new VolleyCallback() {
             @Override
@@ -59,6 +62,9 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     }
 
 
+    /**
+     * Open a trade dialog if the user has enough balance to make a trade.
+     */
     public void OnClickBuy(View v) {
         // Open trade dialog if the user has balance to use
         if (app.GetUser().getBalance() >= 1) {
@@ -69,11 +75,16 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         }
     }
 
+
     public void OnClickSell(View v) {
         Toast.makeText(getApplicationContext(), "Cannot sell yet. HODL", Toast.LENGTH_SHORT).show();
     }
 
 
+    /**
+     * Handle result from the trade dialog. Only gets called when the user confirms the trade.
+     * @param amount fiat amount to trade
+     */
     @Override
     public void getResult(int amount) {
         // We get the fiat amount to purchase here, send POST request to server to complete trade

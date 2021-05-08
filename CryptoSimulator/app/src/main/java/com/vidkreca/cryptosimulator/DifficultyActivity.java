@@ -70,7 +70,9 @@ public class DifficultyActivity extends AppCompatActivity {
         difficulty_rv.setLayoutManager(new LinearLayoutManager(this));
     }
 
-
+    /**
+     * Get difficulties from the server and add them to the ArrayList
+     */
     private void GetData() {
         api.GetOptions(new VolleyCallback() {
             @Override
@@ -81,8 +83,6 @@ public class DifficultyActivity extends AppCompatActivity {
                 difficulties.addAll(Arrays.asList(response.startingDifficulties));
 
                 adapter.notifyDataSetChanged();
-
-                //Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
             }
 
             @Override
