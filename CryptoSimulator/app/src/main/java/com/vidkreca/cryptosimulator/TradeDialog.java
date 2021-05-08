@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.BigDecimal;
@@ -28,6 +29,7 @@ public class TradeDialog extends AppCompatDialogFragment {
     private EditText amountFiat;
     private SeekBar seekBar;
     private Context context;
+    private TextView title;
 
     // Values for the amount of fiat to trade
     private final double min = 1;
@@ -66,6 +68,8 @@ public class TradeDialog extends AppCompatDialogFragment {
                     }
                 });
 
+        title = view.findViewById(R.id.trade_title);
+        title.setText(type.equals("buy") ? "BUY" : "SELL");
         amountFiat = view.findViewById(R.id.amountFiat);
         seekBar = view.findViewById(R.id.seekBar);
         seekBar.setMax((int)this.max);

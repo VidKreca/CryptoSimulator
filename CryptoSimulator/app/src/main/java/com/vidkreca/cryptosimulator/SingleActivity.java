@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vidkreca.data.Cryptocurrency;
 import com.vidkreca.data.PortfolioItem;
 import com.vidkreca.data.ProtocolMessages.Single;
@@ -35,6 +37,12 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         // Assign UI elements
         name = findViewById(R.id.name);
         price = findViewById(R.id.price);
+
+        String imageUrl = API.url + "/img/chart.png";
+        Picasso.with(getApplicationContext()).load(imageUrl)
+                .centerCrop()
+                .fit()
+                .into((ImageView) findViewById(R.id.imageView));
 
         GetData();
     }
