@@ -193,7 +193,7 @@ public class HomeFragment extends Fragment {
      * Update the users fiat balance value.
      */
     private void UpdateBalance() {
-        // Calculate portfolio value
+        // Update portfolio value
         double sum = app.GetUser().GetPortfolioValue();
         String portfolioValueStr = String.format("%.2f€", sum);
         portfolioValue.setText(portfolioValueStr);

@@ -37,6 +37,14 @@ public class User {
         return sum;
     }
 
+    public PortfolioItem GetPortfolioItem(String symbol) {
+        for (PortfolioItem p : portfolio) {
+            if (p.crypto_symbol.equals(symbol))
+                return p;
+        }
+        return null;
+    }
+
     public void AddTrade(Trade t) {
         if (trades == null)
             trades = new ArrayList<>();

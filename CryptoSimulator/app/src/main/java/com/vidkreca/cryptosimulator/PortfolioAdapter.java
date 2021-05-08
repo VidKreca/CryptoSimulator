@@ -80,6 +80,8 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     @Override
     public int getItemCount() {
+        if (app.GetUser().GetPortfolio() == null)
+            return 0;
         return app.GetUser().GetPortfolio().length;
     }
 

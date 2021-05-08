@@ -128,7 +128,8 @@ public class App extends Application {
 
                 user.AddTrade(t);
 
-                String text = "Purchased " + t.fiat_value + "€ of " + t.crypto_symbol;
+                String typeStr = (type == "buy") ? "Bought " : "Sold ";
+                String text = typeStr + t.fiat_value + "€ of " + t.crypto_symbol;
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
             }
 

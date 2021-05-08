@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vidkreca.data.Cryptocurrency;
+import com.vidkreca.data.PortfolioItem;
 import com.vidkreca.data.ProtocolMessages.Single;
 
 
@@ -68,7 +69,7 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     public void OnClickBuy(View v) {
         // Open trade dialog if the user has balance to use
         if (app.GetUser().getBalance() >= 1) {
-            TradeDialog dialog = new TradeDialog((int)app.GetUser().getBalance());
+            TradeDialog dialog = new TradeDialog((int)app.GetUser().getBalance(), "buy");
             dialog.show(getSupportFragmentManager(), "Trade");
         } else {
             Toast.makeText(getBaseContext(), "You're too broke.", Toast.LENGTH_LONG).show();
@@ -77,7 +78,15 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
 
 
     public void OnClickSell(View v) {
-        Toast.makeText(getApplicationContext(), "Cannot sell yet. HODL", Toast.LENGTH_SHORT).show();
+        PortfolioItem p = app.GetUser().GetPortfolioItem(crypto.getSymbol());
+
+        if (p != null) {
+            TradeDialog dialog = new TradeDialog(p.fiat_worth, "sell");
+            dialog.show(getSupportFragmentManager(), "Trade");
+        } else {
+            // Shouldn't be reached...
+            Toast.makeText(getApplicationContext(), "Cannot sell this cryptocurrency as you don't own any.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -86,8 +95,8 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
      * @param amount fiat amount to trade
      */
     @Override
-    public void getResult(int amount) {
+    public void getResult(double amount, String type) {
         // We get the fiat amount to purchase here, send POST request to server to complete trade
-        app.CreateTrade(crypto.getSymbol(), "EUR", "buy", amount);
+        app.CreateTrade(crypto.getSymbol(), "EUR", type, amount);
     }
 }

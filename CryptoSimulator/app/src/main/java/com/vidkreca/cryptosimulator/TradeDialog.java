@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Toast;
+
+import java.math.BigDecimal;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,15 +25,18 @@ public class TradeDialog extends AppCompatDialogFragment {
     private SeekBar seekBar;
 
     // Values for the amount of fiat to trade
-    private final int min = 1;
-    private int max;
-    private int value = min;
+    private final double min = 1;
+    private double max;
+    private double value = min;
+    private String type;
+
 
     private TradeDialogListener listener;
 
 
-    public TradeDialog(int max) {
+    public TradeDialog(double max, String type) {
         this.max = max;
+        this.type = type;
     }
 
     @NonNull
@@ -50,17 +56,15 @@ public class TradeDialog extends AppCompatDialogFragment {
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.getResult(value);
+                        listener.getResult(value, type);
                     }
                 });
 
         amountFiat = view.findViewById(R.id.amountFiat);
         seekBar = view.findViewById(R.id.seekBar);
+        seekBar.setMax((int)this.max);
 
-        // Set maximum value of seekBar to users balance
-        seekBar.setMax(this.max);
-
-        // Set events for both controls
+        // Set events for SeekBar
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -75,20 +79,21 @@ public class TradeDialog extends AppCompatDialogFragment {
             public void onStopTrackingTouch(SeekBar seekBar) { }
         });
 
+        // Set events for EditText
         amountFiat.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    value = Integer.parseInt(s.toString());
+                    value = Double.parseDouble(s.toString());
                     if (value > max) {
                         value = max;
                         String text = String.valueOf(value);
                         amountFiat.setText(text);
                     }
+                    seekBar.setProgress((int)value);
                 } catch (Exception ex) {
                     value = 0;
                 }
-                seekBar.setProgress(value);
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -109,6 +114,6 @@ public class TradeDialog extends AppCompatDialogFragment {
 
 
     public interface TradeDialogListener {
-        void getResult(int amount);
+        void getResult(double amount, String type);
     }
 }
