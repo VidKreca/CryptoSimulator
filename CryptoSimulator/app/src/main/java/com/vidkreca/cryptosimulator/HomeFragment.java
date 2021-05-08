@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vidkreca.data.PortfolioItem;
 import com.vidkreca.data.ProtocolMessages.List;
 import com.vidkreca.data.User;
 
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment {
     private CryptocurrencyAdapter adapter;
     private RecyclerView crypto_rv;
     private TextView balance;
+    private TextView portfolioValue;
     private SwipeRefreshLayout pullToRefresh;
 
 
@@ -71,6 +73,7 @@ public class HomeFragment extends Fragment {
         // Assign UI elements
         crypto_rv = view.findViewById(R.id.crypto_recyclerview);
         balance = view.findViewById(R.id.balance);
+        portfolioValue = view.findViewById(R.id.portfolio_value);
     }
 
     @Override
@@ -162,7 +165,6 @@ public class HomeFragment extends Fragment {
      * Refresh the user object.
      */
     private void GetUser() {
-
         app.RefreshUser(new RefreshCallback() {
             @Override
             public void onRefresh() {
@@ -191,7 +193,17 @@ public class HomeFragment extends Fragment {
      * Update the users fiat balance value.
      */
     private void UpdateBalance() {
-        String balanceStr = Double.toString(app.GetUser().getBalance()) + "€";  // TODO - add different fiat symbols
+        // Calculate portfolio value
+        PortfolioItem[] portfolio = app.GetUser().GetPortfolio();
+        double sum = 0;
+        if (portfolio != null)
+            for (PortfolioItem p : portfolio) {
+                sum += p.fiat_worth;
+            }
+        String portfolioValueStr = String.format("%.2f€", sum);
+        portfolioValue.setText(portfolioValueStr);
+
+        String balanceStr = String.format("%.2f€", app.GetUser().getBalance());
         balance.setText(balanceStr);
     }
 }
