@@ -1,16 +1,21 @@
 package com.vidkreca.cryptosimulator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.vidkreca.data.ProtocolMessages.List;
 import com.vidkreca.data.User;
 
@@ -18,16 +23,37 @@ public class MainActivity extends AppCompatActivity {
 
     private API api;
     private App app;
-    private CryptocurrencyAdapter adapter;
 
-    private RecyclerView crypto_rv;
-    private TextView balance;
-    private SwipeRefreshLayout pullToRefresh;
+    private BottomNavigationView bottomNavigation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        bottomNavigation = findViewById(R.id.bottom_navigation);
+
+        BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.navigation_home:
+                                openFragment(HomeFragment.newInstance());
+                                return true;
+                            case R.id.navigation_portfolio:
+                                openFragment(PortfolioFragment.newInstance());
+                                return true;
+                            case R.id.navigation_settings:
+                                openFragment(SettingsFragment.newInstance());
+                                return true;
+                        }
+                        return false;
+                    }
+                };
+        bottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+
 
         app = (App)getApplication();
         api = app.GetApi();
@@ -35,122 +61,22 @@ public class MainActivity extends AppCompatActivity {
         // Debugging, remove UUID from SharedPreferences
         app.ResetUUID();
 
-        // Assign UI elements
-        crypto_rv = findViewById(R.id.crypto_recyclerview);
-        balance = findViewById(R.id.balance);
-
         // If this is the first startup, start the DifficultyActivity
         if (app.IsFirstStart()) {
             Intent i = new Intent(this, DifficultyActivity.class);
             startActivity(i);
         }
 
-        InitialSetup();
+        // Set HomeFragment as the default
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                new HomeFragment()).commit();
     }
 
 
-    private void InitialSetup() {
-        InitSwipeToRefresh();
-        pullToRefresh.setRefreshing(true);
-        GetData(pullToRefresh);
-        GetUser();
-        InitAdapter();
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        UpdateBalance();
-    }
-
-
-    private void InitAdapter() {
-        adapter = new CryptocurrencyAdapter(app, new CryptocurrencyAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                String symbol_query = app.GetStore().GetAtIndex(position).getSymbol();
-
-                Intent i = new Intent(getBaseContext(), SingleActivity.class);
-                i.putExtra("symbol", symbol_query);
-
-                startActivity(i);
-            }
-            @Override
-            public void onItemLongClick(View itemView, int position) {
-
-            }
-        });
-
-        crypto_rv.setAdapter(adapter);
-        crypto_rv.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-
-    private void GetData(SwipeRefreshLayout pullToRefresh) {
-        api.GetList(new VolleyCallback() {
-            @Override
-            public void onSuccess(String json) {
-                List response = API.gson.fromJson(json, List.class);
-
-                app.GetStore().UpdateCryptocurrencies(response.currencies);
-
-                adapter.notifyDataSetChanged();
-
-                if (pullToRefresh != null)
-                    pullToRefresh.setRefreshing(false);     // Signal that we have finished refreshing
-
-                //Toast.makeText(getBaseContext(), app.GetStore().toString(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(String message) {
-                Toast.makeText(getBaseContext(), "Could not retrieve list of cryptocurrencies.\n"+message, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-
-    private void GetUser() {
-        String uuid = app.GetUUID();
-
-        // Do not perform request if uuid is null
-        if (uuid == null)
-            return;
-
-        api.GetUser(new VolleyCallback() {
-            @Override
-            public void onSuccess(String json) {
-                User response = API.gson.fromJson(json, User.class);
-                app.SetUser(response);
-
-                // Update UI
-                UpdateBalance();
-            }
-
-            @Override
-            public void onError(String message) {
-                Toast.makeText(getBaseContext(), "Could not retrieve user.\n"+message, Toast.LENGTH_LONG).show();
-            }
-        }, uuid);
-    }
-
-
-    private void InitSwipeToRefresh() {
-        pullToRefresh = findViewById(R.id.pullToRefresh);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                GetData(pullToRefresh);
-                GetUser();
-            }
-        });
-    }
-
-
-    private void UpdateBalance() {
-        String balanceStr = Double.toString(app.GetUser().getBalance()) + "€";  // TODO - add different fiat symbols
-        balance.setText(balanceStr);
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
