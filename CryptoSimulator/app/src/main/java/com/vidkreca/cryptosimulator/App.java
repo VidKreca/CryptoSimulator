@@ -92,7 +92,8 @@ public class App extends Application {
 
                 user.AddTrade(t);
 
-                Toast.makeText(getApplicationContext(), "Added new trade", Toast.LENGTH_LONG).show();
+                String text = "Purchased " + t.fiat_value + "€ of " + t.crypto_symbol;
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
             }
 
             @Override
