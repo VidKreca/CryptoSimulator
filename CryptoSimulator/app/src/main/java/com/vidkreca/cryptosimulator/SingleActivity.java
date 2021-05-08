@@ -38,6 +38,7 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         name = findViewById(R.id.name);
         price = findViewById(R.id.price);
 
+        // Fake chart image
         String imageUrl = API.url + "/img/chart.png";
         Picasso.with(getApplicationContext()).load(imageUrl)
                 .centerCrop()
