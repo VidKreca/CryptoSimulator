@@ -194,12 +194,7 @@ public class HomeFragment extends Fragment {
      */
     private void UpdateBalance() {
         // Calculate portfolio value
-        PortfolioItem[] portfolio = app.GetUser().GetPortfolio();
-        double sum = 0;
-        if (portfolio != null)
-            for (PortfolioItem p : portfolio) {
-                sum += p.fiat_worth;
-            }
+        double sum = app.GetUser().GetPortfolioValue();
         String portfolioValueStr = String.format("%.2f€", sum);
         portfolioValue.setText(portfolioValueStr);
 

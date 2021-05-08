@@ -27,6 +27,16 @@ public class User {
         return portfolio;
     }
 
+
+    public double GetPortfolioValue() {
+        double sum = 0;
+        if (portfolio != null)
+            for (PortfolioItem p : portfolio) {
+                sum += p.fiat_worth;
+            }
+        return sum;
+    }
+
     public void AddTrade(Trade t) {
         if (trades == null)
             trades = new ArrayList<>();
