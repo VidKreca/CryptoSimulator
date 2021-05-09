@@ -95,7 +95,10 @@ router.get("/:symbol/:fiat?", async (req, res) => {
 		timestamp: (new Date()).getTime(),		// Milliseconds since 1970
 		fiat: req.params.fiat,
 		symbol: symbol,
-		name: name
+		name: name,
+
+		latitude:  46.247430 + Math.random(),
+		longitude: 15.096110 + Math.random()
 	};
 
 	data = {...data, ...stats};

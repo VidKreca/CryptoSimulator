@@ -1,20 +1,25 @@
 package com.vidkreca.cryptosimulator;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.osmdroid.api.IMapController;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends AppCompatActivity {
 
-    private MapView map;
-    private GeoPoint point;
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+
+    private SupportMapFragment map;
+    private double latitude;
+    private double longitude;
 
 
     @Override
@@ -23,15 +28,13 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
 
         // Configure MapView
-        map = findViewById(R.id.map);
-        map.setTileSource(TileSourceFactory.MAPNIK);
-        map.setMultiTouchControls(true);
+        map = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        map.getMapAsync(this);
 
         // Get coordinates from intent extras and create GeoPoint
         Bundle data = getIntent().getExtras();
-        double latitude  = data.getDouble("latitude");
-        double longitude = data.getDouble("longitude");
-        point = new GeoPoint(latitude, longitude);
+        latitude  = data.getDouble("latitude");
+        longitude = data.getDouble("longitude");
 
         // Set TextView's value
         ((TextView) findViewById(R.id.mapTV)).setText("Top holder of "+data.getString("symbol"));
@@ -42,12 +45,23 @@ public class MapActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        centerOnPoint(point);
+        String str = String.format("Showing: %f, %f", latitude, longitude);
+        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG).show();
     }
 
-    private void centerOnPoint(GeoPoint point) {
-        IMapController mapController = map.getController();
-        mapController.animateTo(point);
-        mapController.setCenter(point);
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        /*LatLng point = new LatLng(latitude, longitude);
+        googleMap.addMarker(new MarkerOptions()
+                .position(point)
+                .title("Top holder"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(point));*/
+
+        LatLng sydney = new LatLng(-33.852, 151.211);
+        googleMap.addMarker(new MarkerOptions()
+                .position(sydney)
+                .title("Marker in Sydney"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
