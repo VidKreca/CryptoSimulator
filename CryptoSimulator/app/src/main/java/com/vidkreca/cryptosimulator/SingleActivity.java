@@ -2,6 +2,7 @@ package com.vidkreca.cryptosimulator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -96,6 +97,17 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
             // Shouldn't be reached...
             Toast.makeText(getApplicationContext(), "Cannot sell this cryptocurrency as you don't own any.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Start map activity to show the crypto's location on map
+     */
+    public void onClickMap(View v) {
+        Intent i = new Intent(getApplicationContext(), MapActivity.class);
+        i.putExtra("latitude", crypto.latitude);
+        i.putExtra("longitude", crypto.longitude);
+        i.putExtra("symbol", crypto.getSymbol());
+        startActivity(i);
     }
 
 

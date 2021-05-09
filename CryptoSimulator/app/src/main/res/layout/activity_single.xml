@@ -32,6 +32,15 @@
             android:onClick="onClickSell"
             android:text="@string/sell"
             />
+        <Button
+            android:id="@+id/mapBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="@dimen/padding_large"
+            android:layout_height="wrap_content"
+            android:onClick="onClickMap"
+            android:text="Map"
+            />
     </LinearLayout>
 
 

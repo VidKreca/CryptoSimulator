@@ -18,6 +18,9 @@ public class Cryptocurrency {
     public double change;
     public double change_percentage;
 
+    public double latitude;
+    public double longitude;
+
 
 
     public Cryptocurrency(String name, String symbol) {
