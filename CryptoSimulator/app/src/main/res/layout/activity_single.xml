@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:layout_marginHorizontal="@dimen/padding_large"
             android:layout_height="wrap_content"
-            android:onClick="OnClickBuy"
+            android:onClick="onClickBuy"
             android:text="Buy"
             />
         <Button
@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:layout_marginHorizontal="@dimen/padding_large"
             android:layout_height="wrap_content"
-            android:onClick="OnClickSell"
+            android:onClick="onClickSell"
             android:text="Sell"
             />
     </LinearLayout>

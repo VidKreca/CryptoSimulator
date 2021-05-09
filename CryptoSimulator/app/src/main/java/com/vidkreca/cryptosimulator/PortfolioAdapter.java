@@ -2,7 +2,6 @@ package com.vidkreca.cryptosimulator;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.vidkreca.data.Cryptocurrency;
 import com.vidkreca.data.PortfolioItem;
 
 import androidx.annotation.NonNull;
@@ -49,7 +47,7 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
     @Override
     public void onBindViewHolder(@NonNull PortfolioAdapter.ViewHolder holder, int position) {
 
-        PortfolioItem tmp = app.GetUser().GetPortfolio()[position];
+        PortfolioItem tmp = app.getUser().GetPortfolio()[position];
 
         // Set portfolio_item views values
         if (tmp != null) {
@@ -80,9 +78,9 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.View
 
     @Override
     public int getItemCount() {
-        if (app.GetUser().GetPortfolio() == null)
+        if (app.getUser().GetPortfolio() == null)
             return 0;
-        return app.GetUser().GetPortfolio().length;
+        return app.getUser().GetPortfolio().length;
     }
 
 

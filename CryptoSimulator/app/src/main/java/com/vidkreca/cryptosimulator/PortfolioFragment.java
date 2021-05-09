@@ -66,35 +66,35 @@ public class PortfolioFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         app = (App) getActivity().getApplication();
-        api = app.GetApi();
+        api = app.getApi();
 
-        InitialSetup();
+        initialSetup();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        GetUser();
+        getUser();
     }
 
     /**
      * Call all initialization methods, get all data.
      */
-    private void InitialSetup() {
-        GetUser();
-        InitAdapter();
+    private void initialSetup() {
+        getUser();
+        initAdapter();
     }
 
 
     /**
      * Initialize the CryptocurrencyAdapter for the RecyclerView.
      */
-    private void InitAdapter() {
+    private void initAdapter() {
         adapter = new PortfolioAdapter(app, new PortfolioAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                String symbol_query = app.GetUser().GetPortfolio()[position].crypto_symbol;
+                String symbol_query = app.getUser().GetPortfolio()[position].crypto_symbol;
 
                 Intent i = new Intent(getContext(), SingleActivity.class);
                 i.putExtra("symbol", symbol_query);
@@ -115,11 +115,11 @@ public class PortfolioFragment extends Fragment {
     /**
      * Refresh the user object.
      */
-    private void GetUser() {
-        app.RefreshUser(new RefreshCallback() {
+    private void getUser() {
+        app.refreshUser(new RefreshCallback() {
             @Override
             public void onRefresh() {
-                Update();
+                updateData();
             }
         });
     }
@@ -128,14 +128,14 @@ public class PortfolioFragment extends Fragment {
     /**
      * Update the users fiat balance value.
      */
-    private void Update() {
+    private void updateData() {
         // Update portfolio value
-        double sum = app.GetUser().GetPortfolioValue();
+        double sum = app.getUser().GetPortfolioValue();
         String portfolioValueStr = String.format("%.2f€", sum);
         portfolioValue.setText(portfolioValueStr);
 
         // Update balance value
-        String balanceStr = String.format("%.2f€", app.GetUser().getBalance());
+        String balanceStr = String.format("%.2f€", app.getUser().getBalance());
         balance.setText(balanceStr);
 
         // Update portfolio items

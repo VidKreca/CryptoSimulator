@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.Volley;
 import com.vidkreca.data.ProtocolMessages.Difficulty;
 import com.vidkreca.data.ProtocolMessages.Options;
 import com.vidkreca.data.User;
@@ -38,19 +37,19 @@ public class DifficultyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_difficulty);
 
         app = (App)getApplication();
-        api = app.GetApi();
+        api = app.getApi();
 
         difficulties = new ArrayList<>();
 
         // Assign UI elements
         difficulty_rv = findViewById(R.id.difficulty_recyclerview);
 
-        InitAdapter();
-        GetData();
+        initAdapter();
+        getData();
     }
 
 
-    private void InitAdapter() {
+    private void initAdapter() {
         adapter = new DifficultyAdapter(app, difficulties, new DifficultyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
@@ -59,7 +58,7 @@ public class DifficultyActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), "Chosen difficulty: "+chosenDifficulty.difficulty, Toast.LENGTH_LONG).show();
 
                 try {
-                    ChooseDifficulty(chosenDifficulty);
+                    chooseDifficulty(chosenDifficulty);
                 } catch (JSONException ex) {
                     Log.e("CryptoSimulator", ex.getMessage());
                 }
@@ -73,8 +72,8 @@ public class DifficultyActivity extends AppCompatActivity {
     /**
      * Get difficulties from the server and add them to the ArrayList
      */
-    private void GetData() {
-        api.GetOptions(new VolleyCallback() {
+    private void getData() {
+        api.getOptions(new VolleyCallback() {
             @Override
             public void onSuccess(String json) {
                 Options response = API.gson.fromJson(json, Options.class);
@@ -93,21 +92,21 @@ public class DifficultyActivity extends AppCompatActivity {
     }
 
 
-    private void ChooseDifficulty(Difficulty d) throws JSONException {
+    private void chooseDifficulty(Difficulty d) throws JSONException {
         // Generate UUID & save it to SharedPreferences
         String uuid = UUID.randomUUID().toString();
-        app.SetUUID(uuid);
+        app.setUUID(uuid);
 
         // Send account creation POST request and get our user object
         JSONObject data = new JSONObject();
         data.put("uuid", uuid);
         data.put("starting_balance", d.balance);
-        api.CreateAccount(new VolleyJsonCallback() {
+        api.createAccount(new VolleyJsonCallback() {
             @Override
             public void onSuccess(JSONObject json) throws JSONException {
                 // We get a User json response here
                 User u = new User(json.getString("_id"), json.getString("uuid"), json.getDouble("balance"));
-                app.SetUser(u);
+                app.setUser(u);
 
                 // After successfully setting our User object, return to MainActivity
                 finish();

@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         app = (App)getApplication();
-        api = app.GetApi();
+        api = app.getApi();
 
         // Debugging, remove UUID from SharedPreferences
         //app.ResetUUID();
 
         // If this is the first startup, start the DifficultyActivity
-        if (app.IsFirstStart()) {
+        if (app.isFirstStart()) {
             Intent i = new Intent(this, DifficultyActivity.class);
             startActivity(i);
         }

@@ -11,7 +11,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.vidkreca.data.FiatCurrencies;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +37,7 @@ public class API {
      * @param endpoint endpoint URL string to append to the API URL
      * @param callback callback object
      */
-    private void MakeGetRequest(String endpoint, final VolleyCallback callback) {
+    private void makeGetRequest(String endpoint, final VolleyCallback callback) {
         endpoint = API.url.concat(endpoint);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, endpoint,
                 new Response.Listener<String>() {
@@ -64,7 +63,7 @@ public class API {
      * @param data JSON request body
      * @param callback callback object
      */
-    private void MakePostRequest(String endpoint, JSONObject data, final VolleyJsonCallback callback) {
+    private void makePostRequest(String endpoint, JSONObject data, final VolleyJsonCallback callback) {
         endpoint = API.url.concat(endpoint);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, endpoint, data,
                 new Response.Listener<JSONObject>() {
@@ -92,8 +91,8 @@ public class API {
      * Get list of all available cryptocurrencies.
      * @param callback callback object
      */
-    public void GetList(final VolleyCallback callback) {
-        MakeGetRequest("/currency/list/", callback);
+    public void getList(final VolleyCallback callback) {
+        makeGetRequest("/currency/list/", callback);
     }
 
     /**
@@ -101,17 +100,17 @@ public class API {
      * @param callback callback object
      * @param symbol symbol of the cryptocurrency
      */
-    public void GetSingle(final VolleyCallback callback, String symbol) {
+    public void getSingle(final VolleyCallback callback, String symbol) {
         String endpoint = "/currency/"+symbol;
-        MakeGetRequest(endpoint, callback);
+        makeGetRequest(endpoint, callback);
     }
 
     /**
      * Get app options: starting difficulties, more in the future.
      * @param callback callback object
      */
-    public void GetOptions(final VolleyCallback callback) {
-        MakeGetRequest("/options/", callback);
+    public void getOptions(final VolleyCallback callback) {
+        makeGetRequest("/options/", callback);
     }
 
     /**
@@ -121,7 +120,7 @@ public class API {
      */
     public void GetUser(final VolleyCallback callback, String uuid) {
         String endpoint = "/user/" + uuid;
-        MakeGetRequest(endpoint, callback);
+        makeGetRequest(endpoint, callback);
     }
 
     /**
@@ -129,9 +128,9 @@ public class API {
      * @param callback callback object
      * @param uuid user's uuid
      */
-    public void GetTrades(final VolleyCallback callback, String uuid) {
+    public void getTrades(final VolleyCallback callback, String uuid) {
         String endpoint = "/trade/"+uuid;
-        MakeGetRequest(endpoint, callback);
+        makeGetRequest(endpoint, callback);
     }
 
     /**
@@ -139,8 +138,8 @@ public class API {
      * @param callback callback object
      * @param data JSON body with user info.
      */
-    public void CreateAccount(final VolleyJsonCallback callback, JSONObject data) {
-        MakePostRequest("/user/", data, callback);
+    public void createAccount(final VolleyJsonCallback callback, JSONObject data) {
+        makePostRequest("/user/", data, callback);
     }
 
     /**
@@ -148,7 +147,7 @@ public class API {
      * @param callback callback object
      * @param data JSON body with trade info.
      */
-    public void CreateTrade(final VolleyJsonCallback callback, JSONObject data) {
-        MakePostRequest("/trade/", data, callback);
+    public void createTrade(final VolleyJsonCallback callback, JSONObject data) {
+        makePostRequest("/trade/", data, callback);
     }
 }

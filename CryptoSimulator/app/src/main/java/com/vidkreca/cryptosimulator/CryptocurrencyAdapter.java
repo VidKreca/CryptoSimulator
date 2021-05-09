@@ -46,7 +46,7 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Cryptocurrency tmp = app.GetStore().GetAtIndex(position);
+        Cryptocurrency tmp = app.getStore().GetAtIndex(position);
 
         // Set Cryptocurrency views values
         if (tmp != null) {
@@ -67,7 +67,7 @@ public class CryptocurrencyAdapter extends RecyclerView.Adapter<CryptocurrencyAd
 
     @Override
     public int getItemCount() {
-        return app.GetStore().Size();
+        return app.getStore().Size();
     }
 
 

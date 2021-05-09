@@ -5,15 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.Volley;
 import com.vidkreca.data.Store;
 import com.vidkreca.data.Trade;
 import com.vidkreca.data.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.UUID;
 
 public class App extends Application {
 
@@ -39,8 +36,8 @@ public class App extends Application {
     }
 
 
-    public void RefreshUser(RefreshCallback callback) {
-        String uuid = this.GetUUID();
+    public void refreshUser(RefreshCallback callback) {
+        String uuid = this.getUUID();
 
         if (uuid == null)
             return;
@@ -49,7 +46,7 @@ public class App extends Application {
             @Override
             public void onSuccess(String json) {
                 User response = API.gson.fromJson(json, User.class);
-                SetUser(response);
+                setUser(response);
 
                 callback.onRefresh();
             }
@@ -68,24 +65,24 @@ public class App extends Application {
      * Return true if the user hasn't chosen a difficulty and created his account yet.
      * @return true if first start
      */
-    public boolean IsFirstStart() {
+    public boolean isFirstStart() {
         return !sp.contains(UUID_SP_KEY);
     }
 
-    public void SetUUID(String uuid) {
+    public void setUUID(String uuid) {
         sp.edit().putString(UUID_SP_KEY, uuid).apply();     // Note - might want to use .commit here instead
     }
-    public String GetUUID() {
+    public String getUUID() {
         return sp.getString(UUID_SP_KEY, null);
     }
-    public void SetUser(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
-    public User GetUser() {
+    public User getUser() {
         return user;
     }
-    public API GetApi() { return api; }
-    public Store GetStore() {
+    public API getApi() { return api; }
+    public Store getStore() {
         return store;
     }
 
@@ -97,7 +94,7 @@ public class App extends Application {
      * @param type "buy" or "sell"
      * @param amount amount of fiat to spend
      */
-    public void CreateTrade(String symbol, String fiat, String type, double amount) {
+    public void createTrade(String symbol, String fiat, String type, double amount) {
         // Type should be "sell" or "buy"
         if (!type.equals("sell") && !type.equals("buy"))
             return;     // TODO - throw exception here
@@ -105,7 +102,7 @@ public class App extends Application {
         // Create request object
         JSONObject data = new JSONObject();
         try {
-            data.put("uuid", GetUUID());
+            data.put("uuid", getUUID());
             data.put("type", type);
             data.put("fiat_value", amount);
             data.put("fiat", fiat);
@@ -114,7 +111,7 @@ public class App extends Application {
             return;     // TODO - throw exception here
         }
 
-        api.CreateTrade(new VolleyJsonCallback() {
+        api.createTrade(new VolleyJsonCallback() {
             @Override
             public void onSuccess(JSONObject json) throws JSONException {
                 Trade t = new Trade(
@@ -146,7 +143,7 @@ public class App extends Application {
     /*
     * ===================== DEBUGGING ===================
     * */
-    public void ResetUUID() {
+    public void resetUUID() {
         sp.edit().remove(UUID_SP_KEY).commit();
     }
 }

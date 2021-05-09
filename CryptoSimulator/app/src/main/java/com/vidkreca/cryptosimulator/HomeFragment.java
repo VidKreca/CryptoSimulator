@@ -16,9 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.vidkreca.data.PortfolioItem;
 import com.vidkreca.data.ProtocolMessages.List;
-import com.vidkreca.data.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,9 +79,9 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         app = (App) getActivity().getApplication();
-        api = app.GetApi();
+        api = app.getApi();
 
-        InitialSetup();
+        initialSetup();
     }
 
     /**
@@ -93,30 +91,30 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        UpdateBalance();
+        updateBalance();
     }
 
 
     /**
      * Call all initialization methods, get all data.
      */
-    private void InitialSetup() {
-        InitSwipeToRefresh();
+    private void initialSetup() {
+        initSwipeToRefresh();
         pullToRefresh.setRefreshing(true);
-        GetData(pullToRefresh);
-        GetUser();
-        InitAdapter();
+        getData(pullToRefresh);
+        getUser();
+        initAdapter();
     }
 
 
     /**
      * Initialize the CryptocurrencyAdapter for the RecyclerView.
      */
-    private void InitAdapter() {
+    private void initAdapter() {
         adapter = new CryptocurrencyAdapter(app, new CryptocurrencyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                String symbol_query = app.GetStore().GetAtIndex(position).getSymbol();
+                String symbol_query = app.getStore().GetAtIndex(position).getSymbol();
 
                 Intent i = new Intent(getContext(), SingleActivity.class);
                 i.putExtra("symbol", symbol_query);
@@ -137,13 +135,13 @@ public class HomeFragment extends Fragment {
     /**
      * Get all cryptocurrency data.
      */
-    private void GetData(SwipeRefreshLayout pullToRefresh) {
-        api.GetList(new VolleyCallback() {
+    private void getData(SwipeRefreshLayout pullToRefresh) {
+        api.getList(new VolleyCallback() {
             @Override
             public void onSuccess(String json) {
                 List response = API.gson.fromJson(json, List.class);
 
-                app.GetStore().UpdateCryptocurrencies(response.currencies);
+                app.getStore().UpdateCryptocurrencies(response.currencies);
 
                 adapter.notifyDataSetChanged();
 
@@ -164,11 +162,11 @@ public class HomeFragment extends Fragment {
     /**
      * Refresh the user object.
      */
-    private void GetUser() {
-        app.RefreshUser(new RefreshCallback() {
+    private void getUser() {
+        app.refreshUser(new RefreshCallback() {
             @Override
             public void onRefresh() {
-                UpdateBalance();
+                updateBalance();
             }
         });
     }
@@ -177,13 +175,13 @@ public class HomeFragment extends Fragment {
     /**
      * Set onRefresh event handler for swipe.
      */
-    private void InitSwipeToRefresh() {
+    private void initSwipeToRefresh() {
         pullToRefresh = getView().findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                GetData(pullToRefresh);
-                GetUser();
+                getData(pullToRefresh);
+                getUser();
             }
         });
     }
@@ -192,13 +190,13 @@ public class HomeFragment extends Fragment {
     /**
      * Update the users fiat balance value.
      */
-    private void UpdateBalance() {
+    private void updateBalance() {
         // Update portfolio value
-        double sum = app.GetUser().GetPortfolioValue();
+        double sum = app.getUser().GetPortfolioValue();
         String portfolioValueStr = String.format("%.2f€", sum);
         portfolioValue.setText(portfolioValueStr);
 
-        String balanceStr = String.format("%.2f€", app.GetUser().getBalance());
+        String balanceStr = String.format("%.2f€", app.getUser().getBalance());
         balance.setText(balanceStr);
     }
 }

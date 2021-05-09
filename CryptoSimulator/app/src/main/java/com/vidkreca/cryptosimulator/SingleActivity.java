@@ -31,7 +31,7 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         setContentView(R.layout.activity_single);
 
         app = (App)getApplication();
-        api = app.GetApi();
+        api = app.getApi();
         symbol_query = getIntent().getExtras().getString("symbol");
 
         // Assign UI elements
@@ -45,15 +45,15 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
                 .fit()
                 .into((ImageView) findViewById(R.id.imageView));
 
-        GetData();
+        getData();
     }
 
 
     /**
      * Get all data about this cryptocurrency.
      */
-    private void GetData() {
-        api.GetSingle(new VolleyCallback() {
+    private void getData() {
+        api.getSingle(new VolleyCallback() {
             @Override
             public void onSuccess(String json) {
                 Single response = API.gson.fromJson(json, Single.class);
@@ -75,10 +75,10 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     /**
      * Open a trade dialog if the user has enough balance to make a trade.
      */
-    public void OnClickBuy(View v) {
+    public void onClickBuy(View v) {
         // Open trade dialog if the user has balance to use
-        if (app.GetUser().getBalance() >= 1) {
-            TradeDialog dialog = new TradeDialog((int)app.GetUser().getBalance(), "buy", getApplicationContext());
+        if (app.getUser().getBalance() >= 1) {
+            TradeDialog dialog = new TradeDialog((int)app.getUser().getBalance(), "buy", getApplicationContext());
             dialog.show(getSupportFragmentManager(), "Trade");
         } else {
             Toast.makeText(getBaseContext(), "You're too broke.", Toast.LENGTH_LONG).show();
@@ -86,8 +86,8 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     }
 
 
-    public void OnClickSell(View v) {
-        PortfolioItem p = app.GetUser().GetPortfolioItem(crypto.getSymbol());
+    public void onClickSell(View v) {
+        PortfolioItem p = app.getUser().GetPortfolioItem(crypto.getSymbol());
 
         if (p != null) {
             TradeDialog dialog = new TradeDialog(p.fiat_worth, "sell", getApplicationContext());
@@ -106,6 +106,6 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
     @Override
     public void getResult(double amount, String type) {
         // We get the fiat amount to purchase here, send POST request to server to complete trade
-        app.CreateTrade(crypto.getSymbol(), "EUR", type, amount);
+        app.createTrade(crypto.getSymbol(), "EUR", type, amount);
     }
 }
