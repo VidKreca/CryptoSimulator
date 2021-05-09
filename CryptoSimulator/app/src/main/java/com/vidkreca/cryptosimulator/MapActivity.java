@@ -52,16 +52,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        /*LatLng point = new LatLng(latitude, longitude);
+        LatLng point = new LatLng(latitude, longitude);
         googleMap.addMarker(new MarkerOptions()
                 .position(point)
                 .title("Top holder"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(point));*/
-
-        LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(point));
+        googleMap.moveCamera(CameraUpdateFactory.zoomTo(10));
     }
 }

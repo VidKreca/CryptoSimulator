@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.vidkreca.data.Cryptocurrency;
 import com.vidkreca.data.PortfolioItem;
-import com.vidkreca.data.ProtocolMessages.Single;
 
 
 public class SingleActivity extends AppCompatActivity implements TradeDialog.TradeDialogListener {
@@ -57,8 +56,7 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         api.getSingle(new VolleyCallback() {
             @Override
             public void onSuccess(String json) {
-                Single response = API.gson.fromJson(json, Single.class);
-                crypto = response.GetCryptocurrency();
+                crypto = API.gson.fromJson(json, Cryptocurrency.class);
 
                 // Assign retrieved values to UI elements
                 name.setText(crypto.getName());
