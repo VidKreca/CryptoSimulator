@@ -50,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:gravity="end"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -67,7 +68,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/crypto_percentage"
             android:text="0%"
-            android:textSize="@dimen/font_size_normal" />
+            android:textSize="@dimen/font_size_normal"
+            />
 
     </LinearLayout>
 
