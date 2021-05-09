@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import events.UpdateEvent;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vidkreca.data.ProtocolMessages.List;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,6 +99,24 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Register subscriber
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    public void onStop() {
+        // Unregister subscriber
+        EventBus.getDefault().unregister(this);
+
+        super.onStop();
+    }
+
+
     /**
      * Call all initialization methods, get all data.
      */
@@ -163,12 +185,7 @@ public class HomeFragment extends Fragment {
      * Refresh the user object.
      */
     private void getUser() {
-        app.refreshUser(new RefreshCallback() {
-            @Override
-            public void onRefresh() {
-                updateBalance();
-            }
-        });
+        app.refreshUser();
     }
 
 
@@ -198,5 +215,14 @@ public class HomeFragment extends Fragment {
 
         String balanceStr = String.format("%.2f€", app.getUser().getBalance());
         balance.setText(balanceStr);
+    }
+
+
+    /**
+     * This gets called when a UpdateEvent is posted
+     */
+    @Subscribe
+    public void onUpdateEvent(UpdateEvent event) {
+        this.updateBalance();
     }
 }

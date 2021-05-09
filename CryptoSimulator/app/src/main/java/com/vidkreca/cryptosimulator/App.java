@@ -9,8 +9,11 @@ import com.vidkreca.data.Store;
 import com.vidkreca.data.Trade;
 import com.vidkreca.data.User;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import events.UpdateEvent;
 
 public class App extends Application {
 
@@ -36,7 +39,7 @@ public class App extends Application {
     }
 
 
-    public void refreshUser(RefreshCallback callback) {
+    public void refreshUser() {
         String uuid = this.getUUID();
 
         if (uuid == null)
@@ -48,7 +51,8 @@ public class App extends Application {
                 User response = API.gson.fromJson(json, User.class);
                 setUser(response);
 
-                callback.onRefresh();
+                // Post an UpdateEvent
+                EventBus.getDefault().post(new UpdateEvent());
             }
 
             @Override

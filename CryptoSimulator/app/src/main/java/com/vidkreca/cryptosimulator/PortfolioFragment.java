@@ -8,11 +8,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import events.UpdateEvent;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +82,26 @@ public class PortfolioFragment extends Fragment {
         getUser();
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Register subscriber
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    public void onStop() {
+        // Unregister subscriber
+        EventBus.getDefault().unregister(this);
+
+        super.onStop();
+    }
+
+
+
     /**
      * Call all initialization methods, get all data.
      */
@@ -116,12 +140,7 @@ public class PortfolioFragment extends Fragment {
      * Refresh the user object.
      */
     private void getUser() {
-        app.refreshUser(new RefreshCallback() {
-            @Override
-            public void onRefresh() {
-                updateData();
-            }
-        });
+        app.refreshUser();
     }
 
 
@@ -140,5 +159,15 @@ public class PortfolioFragment extends Fragment {
 
         // Update portfolio items
         adapter.notifyDataSetChanged();
+    }
+
+
+
+    /**
+     * This gets called when a UpdateEvent is posted
+     */
+    @Subscribe
+    public void onUpdateEvent(UpdateEvent event) {
+        this.updateData();
     }
 }
