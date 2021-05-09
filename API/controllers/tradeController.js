@@ -76,7 +76,8 @@ module.exports = {
                 });
             }
 
-            user.balance = user.balance - req.body.fiat_value;
+            let update_amount = (req.body.type == "buy") ? -1 * req.body.fiat_value : req.body.fiat_value;
+            user.balance = user.balance + update_amount;
             
             user.save(function (err, user) {
                 if (err) {
