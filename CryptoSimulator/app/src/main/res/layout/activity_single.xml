@@ -21,7 +21,7 @@
             android:layout_marginHorizontal="@dimen/padding_large"
             android:layout_height="wrap_content"
             android:onClick="onClickBuy"
-            android:text="Buy"
+            android:text="@string/buy"
             />
         <Button
             android:id="@+id/sellBtn"
@@ -30,7 +30,7 @@
             android:layout_marginHorizontal="@dimen/padding_large"
             android:layout_height="wrap_content"
             android:onClick="onClickSell"
-            android:text="Sell"
+            android:text="@string/sell"
             />
     </LinearLayout>
 
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="8823.42"
+        android:text="@string/empty_fiat"
         android:textSize="@dimen/font_size_large"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/name" />
@@ -60,7 +60,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/empty_cryptocurrency_name"
         android:textColor="@color/secondaryDark"
         android:textSize="@dimen/font_size_normal"
         app:layout_constraintStart_toStartOf="@+id/guideline4"

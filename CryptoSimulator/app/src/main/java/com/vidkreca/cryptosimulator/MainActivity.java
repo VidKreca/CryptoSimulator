@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         api = app.getApi();
 
         // Debugging, remove UUID from SharedPreferences
-        //app.ResetUUID();
+        //app.resetUUID();
 
         // If this is the first startup, start the DifficultyActivity
         if (app.isFirstStart()) {

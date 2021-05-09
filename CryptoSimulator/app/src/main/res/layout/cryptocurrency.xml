@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/crypto_name"
-            android:text="Cryptocurrency"
+            android:text="@string/empty_cryptocurrency_name"
             android:textColor="@color/secondaryDark"
             android:textSize="@dimen/font_size_normal"/>
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/crypto_symbol"
-            android:text="CC"
+            android:text="@string/empty_cryptocurrency_symbol"
             android:textSize="@dimen/font_size_small"
             android:textColor="@color/secondary"/>
 
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/crypto_price"
-        android:text="0€"
+        android:text="@string/empty_fiat"
         android:textSize="@dimen/font_size_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/crypto_amount"
-            android:text="0"
+            android:text="@string/empty_cryptocurrency"
             android:textSize="@dimen/font_size_small"
             android:textColor="@color/secondary"/>
 
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/crypto_worth"
-            android:text="0€"
+            android:text="@string/empty_fiat"
             android:textSize="@dimen/font_size_normal"
             />
 
@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/crypto_percentage"
-            android:text="0%"
+            android:text="@string/empty_percentage"
             android:textSize="@dimen/font_size_normal"
             />
 

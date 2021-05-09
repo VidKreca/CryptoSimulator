@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:text="Trade"
+        android:text="@string/trade"
         android:textSize="@dimen/font_size_large"
         android:textStyle="bold"
         />
@@ -19,7 +19,9 @@
         android:id="@+id/amountFiat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number|numberDecimal" />
+        android:inputType="number|numberDecimal"
+        android:autofillHints=""
+        android:hint="EUR amount to trade for cryptocurrency" />
 
     <SeekBar
         android:id="@+id/seekBar"

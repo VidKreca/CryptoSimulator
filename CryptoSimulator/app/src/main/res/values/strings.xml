@@ -1,19 +1,20 @@
 <resources>
     <string name="app_name">CryptoSimulator</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <!-- EMPTY VALUES -->
+    <string name="empty_fiat">0€</string>
+    <string name="empty_cryptocurrency">0</string>
+    <string name="empty_percentage">0%</string>
+    <string name="empty_cryptocurrency_name">None</string>
+    <string name="empty_cryptocurrency_symbol">SYM</string>
+    <string name="empty_difficulty">Difficulty</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- SHORT VALUES -->
+    <string name="buy">Buy</string>
+    <string name="sell">Sell</string>
+    <string name="cryptocurrency">Cryptocurrency</string>
+    <string name="balance">Balance</string>
+    <string name="portfolio_value">Portfolio value</string>
+    <string name="trade">Trade</string>
+
 </resources>

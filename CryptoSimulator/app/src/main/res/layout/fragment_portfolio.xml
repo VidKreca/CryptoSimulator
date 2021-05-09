@@ -24,7 +24,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Balance"
+                android:text="@string/balance"
                 android:layout_gravity="center"
                 />
             <TextView
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/padding_large"
-                android:text="0€"
+                android:text="@string/empty_fiat"
                 android:layout_gravity="center"
                 android:textSize="@dimen/font_size_large" />
         </LinearLayout>
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Portfolio value"
+                android:text="@string/portfolio_value"
                 android:layout_gravity="center"
                 />
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/padding_large"
-                android:text="0€"
+                android:text="@string/empty_fiat"
                 android:layout_gravity="center"
                 android:textSize="@dimen/font_size_large" />
         </LinearLayout>
