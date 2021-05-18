@@ -10,41 +10,39 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:layout_constraintStart_toEndOf="@id/guideline4"
         app:layout_constraintEnd_toStartOf="@id/guideline5"
-        app:layout_constraintTop_toBottomOf="@id/barrier5">
+        app:layout_constraintStart_toEndOf="@id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/guideline16">
 
         <Button
             android:id="@+id/buyBtn"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="@dimen/padding_large"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_large"
+            android:layout_weight="1"
             android:onClick="onClickBuy"
-            android:text="@string/buy"
-            />
+            android:text="@string/buy" />
+
         <Button
             android:id="@+id/sellBtn"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="@dimen/padding_large"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_large"
+            android:layout_weight="1"
             android:onClick="onClickSell"
-            android:text="@string/sell"
-            />
+            android:text="@string/sell" />
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="261dp"
-        android:layout_height="243dp"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@id/barrier3"
-        tools:layout_editor_absoluteY="215dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        app:layout_constraintBottom_toTopOf="@id/guideline16"/>
+
 
     <TextView
         android:id="@+id/price"
@@ -74,14 +72,6 @@
         app:constraint_referenced_ids="name,price"
         tools:layout_editor_absoluteY="731dp" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="imageView"
-        tools:layout_editor_absoluteY="106dp" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
@@ -109,4 +99,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.94" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

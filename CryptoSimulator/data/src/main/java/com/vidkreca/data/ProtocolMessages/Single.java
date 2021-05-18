@@ -15,6 +15,7 @@ public class Single {
     public double volume_30d;
     public double change;
     public double change_percentage;
+    public double[] priceData;
 
 
     public Cryptocurrency GetCryptocurrency() {

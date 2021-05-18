@@ -89,13 +89,19 @@ router.get("/:symbol/:fiat?", async (req, res) => {
 
 	// Build data object to return
 	let stats = await apiInterface.getStats(symbol, req.params.fiat);
+	let candles = await apiInterface.getCandles(symbol);
+
+	// Reduce candles to an array of only open prices instead of [time, low, high, open, close, volume]
+	let priceData = candles.map(x => x[1]);
+	priceData = priceData.reverse();
 
 	let data = {
 		success: true,
 		timestamp: (new Date()).getTime(),		// Milliseconds since 1970
 		fiat: req.params.fiat,
 		symbol: symbol,
-		name: name
+		name: name,
+		priceData: priceData
 	};
 
 	data = {...data, ...stats};

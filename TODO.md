@@ -2,25 +2,25 @@
 
 
 ## Android app
-[ ] Create ListView for displaying all available cryptos
+[x] Create ListView for displaying all available cryptos
 
-[ ] Create REST API interface
+[x] Create REST API interface
 
-[ ] Either JWT login system or device storage for user account
+[x] Either JWT login system or device storage for user account
 
-[ ] Activity for seperate cryptos
+[x] Activity for seperate cryptos
 
-[ ] Activity for displaying portfolio
+[x] Activity for displaying portfolio
 
-[ ] Activity for settings
+[x] Activity for settings
 
 [ ] Charts using MPAndroidChart
 
 
 
 ## Node server
-[ ] Endpoints for android app 
+[x] Endpoints for android app 
 
-[ ] Fetching data from Coinbase API
+[x] Fetching data from Coinbase API
 
-[ ] Caching data (?)
+[x] Caching data (?)

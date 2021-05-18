@@ -16,6 +16,7 @@ const publicClient = new CoinbasePro.PublicClient();
 // Simple caching mechanism
 var cache = {};
 const cacheInterval = 4 * 1000;	// Invalidate all prices older than this interval
+const candleCacheInterval = 10 * 1000;
 
 
 
@@ -79,5 +80,27 @@ module.exports = {
 		cache[fiat][currency] = stats;
 
 		return stats;
+	},
+
+
+
+
+	async getCandles(currency, fiat="EUR") {
+
+		let granularity = 3600;
+		let dayOffset = 7;
+		let from = new Date();
+ 		from.setDate(from.getDate() - dayOffset);
+ 		let to = new Date();
+
+		let symbol = (currency.trim() + "-" + fiat.trim()).toUpperCase();	// Build pair id from currency symbol and fiat
+		let candles = await publicClient.getProductHistoricRates(symbol, {
+			granularity: granularity,
+			start: from.toISOString(),
+			end: to
+		});
+
+		return candles;		
+
 	}
 }
