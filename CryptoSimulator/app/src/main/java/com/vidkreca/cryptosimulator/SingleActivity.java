@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -82,6 +83,10 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         chart.getAxisRight().setDrawGridLines(false);
         chart.getAxisRight().setDrawLabels(false);
         chart.getAxisRight().setDrawAxisLine(false);
+
+        // Configure chart marker
+        IMarker marker = new ChartMarker(getApplicationContext(), R.layout.chart_marker);
+        chart.setMarker(marker);
 
 
         getData();
