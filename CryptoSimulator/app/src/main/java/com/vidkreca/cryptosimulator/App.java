@@ -138,11 +138,10 @@ public class App extends Application {
     }
 
 
-
-
-    /*
-    * ===================== DEBUGGING ===================
-    * */
+    /**
+     * Deletes our UUID which effectively deletes our user account and resets all progress.
+     * This is not reversible easily.
+     */
     public void resetUUID() {
         sp.edit().remove(UUID_SP_KEY).commit();
     }

@@ -66,7 +66,8 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         chart.setTouchEnabled(true);
         chart.setPinchZoom(true);
         chart.setNoDataText("No price data for this cryptocurrency.");
-        chart.getDescription().setEnabled(false);
+        chart.getDescription().setText("7-day price history");
+        chart.getDescription().setTextColor(Color.BLUE);
         chart.setDrawGridBackground(false);
         chart.setDrawBorders(false);
         chart.setMaxVisibleValueCount(5);
