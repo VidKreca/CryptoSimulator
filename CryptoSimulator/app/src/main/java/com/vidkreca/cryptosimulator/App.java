@@ -141,6 +141,8 @@ public class App extends Application {
                 if (getNotificationEnabled() && t.type.equals("buy")) {
                     Intent intent = new Intent(App.this, UpdateBroadcast.class);
                     intent.putExtra("symbol", t.crypto_symbol);
+                    intent.putExtra("fiat_price", t.fiat_value);
+                    intent.putExtra("crypto_value", t.crypto_value);
                     PendingIntent pendingIntent = PendingIntent.getBroadcast(App.this, 0, intent, 0);
 
                     AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
