@@ -1,7 +1,10 @@
 package com.vidkreca.cryptosimulator;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ public class App extends Application {
     public final String TAG = "CryptoSimulator";
     public final String SHARED_PREFERENCES_TAG = "CryptoSimulator";
     public final String UUID_SP_KEY = "uuid";
+    public final String NOTIF_SP_KEY = "notificationEnabled";
 
     private API api;
     private Store store;
@@ -85,6 +89,10 @@ public class App extends Application {
     public Store getStore() {
         return store;
     }
+    public Boolean getNotificationEnabled() { return sp.getBoolean(NOTIF_SP_KEY, false); }
+    public void setNotificationEnabled(Boolean v) {
+        sp.edit().putBoolean(NOTIF_SP_KEY, v).apply();
+    }
 
 
     /**
@@ -128,6 +136,18 @@ public class App extends Application {
                 String typeStr = (type == "buy") ? "Bought " : "Sold ";
                 String text = typeStr + t.fiat_value + "€ of " + t.crypto_symbol;
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+
+                // Create notification if enabled
+                Intent intent = new Intent(App.this, UpdateBroadcast.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(App.this, 0, intent, 0);
+
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                long currentTime = System.currentTimeMillis();
+                //long remindIn = 1000 * 60 * 60;     // Remind in this many milliseconds (1h)
+                long remindIn = 1000 * 5;
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime+remindIn, pendingIntent);
             }
 
             @Override

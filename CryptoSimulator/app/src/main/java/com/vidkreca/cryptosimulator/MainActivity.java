@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -51,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         app = (App)getApplication();
         api = app.getApi();
 
-        // Debugging, remove UUID from SharedPreferences
-        //app.resetUUID();
+        // Create notification channel
+        createNotificationChannel();
 
         // If this is the first startup, start the DifficultyActivity
         if (app.isFirstStart()) {
@@ -75,5 +78,20 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String name = "CryptoSimulator";
+            String description = "Notification channel for CryptoSimulator";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel("CryptoSimulator", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
