@@ -43,6 +43,9 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
 
     private TextView name;
     private TextView price;
+    private TextView dailyChange;
+    private TextView dailyVolume;
+    private TextView dailyHighLow;
 
     private LineChart chart;
 
@@ -59,6 +62,9 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
         // Assign UI elements
         name = findViewById(R.id.name);
         price = findViewById(R.id.price);
+        dailyChange = findViewById(R.id.dailyChange);
+        dailyVolume = findViewById(R.id.dailyVolume);
+        dailyHighLow = findViewById(R.id.dailyHighLow);
 
 
         // Chart config
@@ -107,6 +113,9 @@ public class SingleActivity extends AppCompatActivity implements TradeDialog.Tra
                 // Assign retrieved values to UI elements
                 name.setText(crypto.getName());
                 price.setText(Double.toString(crypto.getPrice()) + "€");    // TODO - consider currently selected FIAT currency
+                dailyChange.setText(String.format("%.2f%%", crypto.change_percentage));
+                dailyVolume.setText(String.format("%.2f€", crypto.volume));
+                dailyHighLow.setText(String.format("%.2f / %.2f", crypto.high, crypto.low));
 
                 // Assign priceData to chart
                 setPriceData(response.priceData);

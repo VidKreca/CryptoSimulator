@@ -60,8 +60,8 @@ module.exports = {
 		let stats = await publicClient.getProduct24HrStats(symbol);
 
 		// Change daily change percentage
-		let change = (parseFloat(stats.last) - parseFloat(stats.open))
-		let change_percentage = change / parseFloat(stats.open)
+		let change = (parseFloat(stats.last) - parseFloat(stats.open));
+		let change_percentage = (change / parseFloat(stats.open)) * 100;
 
 		stats = {
 			price:  parseFloat(stats.last), 

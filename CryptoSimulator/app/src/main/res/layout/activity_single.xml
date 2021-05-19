@@ -7,12 +7,14 @@
     tools:context=".SingleActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         app:layout_constraintEnd_toStartOf="@id/guideline5"
         app:layout_constraintStart_toEndOf="@id/guideline4"
-        app:layout_constraintTop_toBottomOf="@id/guideline16">
+        app:layout_constraintTop_toBottomOf="@id/guideline16"
+        android:paddingBottom="@dimen/padding_small">
 
         <Button
             android:id="@+id/buyBtn"
@@ -63,6 +65,61 @@
         android:textSize="@dimen/font_size_normal"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/guideline5"
+        app:layout_constraintStart_toEndOf="@id/guideline4"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout1">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daily change: "
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/dailyChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_cryptocurrency" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daily volume: "
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/dailyVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_cryptocurrency" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Daily high / low: "
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/dailyHighLow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_cryptocurrency" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier3"
