@@ -137,17 +137,20 @@ public class App extends Application {
                 String text = typeStr + t.fiat_value + "€ of " + t.crypto_symbol;
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
 
-                // Create notification if enabled
-                Intent intent = new Intent(App.this, UpdateBroadcast.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(App.this, 0, intent, 0);
+                // Create notification if enabled and trade is a buy
+                if (getNotificationEnabled() && t.type.equals("buy")) {
+                    Intent intent = new Intent(App.this, UpdateBroadcast.class);
+                    intent.putExtra("symbol", t.crypto_symbol);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(App.this, 0, intent, 0);
 
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-                long currentTime = System.currentTimeMillis();
-                //long remindIn = 1000 * 60 * 60;     // Remind in this many milliseconds (1h)
-                long remindIn = 1000 * 5;
+                    long currentTime = System.currentTimeMillis();
+                    //long remindIn = 1000 * 60 * 60;     // Remind in this many milliseconds (1h)
+                    long remindIn = 1000 * 5;
 
-                alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime+remindIn, pendingIntent);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime+remindIn, pendingIntent);
+                }
             }
 
             @Override

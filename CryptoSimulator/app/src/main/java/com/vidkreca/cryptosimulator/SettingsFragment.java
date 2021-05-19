@@ -12,12 +12,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 /**
@@ -30,6 +32,7 @@ public class SettingsFragment extends Fragment {
     private App app;
 
     private Button resetBtn;
+    private SwitchCompat notificationSwitch;
 
 
     public SettingsFragment() {
@@ -65,6 +68,7 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         resetBtn = view.findViewById(R.id.resetBtn);
+        notificationSwitch = view.findViewById(R.id.notificationSwitch);
     }
 
 
@@ -73,6 +77,9 @@ public class SettingsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         app = (App) getActivity().getApplication();
+
+        // Set current notificationSwitch value
+        notificationSwitch.setChecked(app.getNotificationEnabled());
 
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +105,14 @@ public class SettingsFragment extends Fragment {
                                 Runtime.getRuntime().exit(0);
                             }})
                         .setNegativeButton(android.R.string.no, null).show();
+            }
+        });
+
+
+        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                app.setNotificationEnabled(isChecked);
             }
         });
     }
