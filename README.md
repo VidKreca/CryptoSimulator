@@ -3,10 +3,11 @@
 ## Summary
 A mobile crypto market simulator app that lets you invest fake money into the real cryptocurrency market. 
 
+[![YouTube presentation](https://img.youtube.com/vi/GvL9W64Mt4s/0.jpg)](https://www.youtube.com/watch?v=GvL9W64Mt4s)
+
 
 
 ## App features
-- Create account, log into existing user account
 - All data is stored on the server, always synced
 - Choose starting difficulty (easy - 10.000€, medium - 1000€, hard - 100€)
 - Invest into different cryptocurrencies available on the app
@@ -16,7 +17,7 @@ A mobile crypto market simulator app that lets you invest fake money into the re
 - Reset account and start over once you lose everything on altcoins
 
 
-### Optional features
+### Optional features to add in the future
 - Achievements (example: 100% profit, lose 99% of the initial investment)
 - Levels, gaining XP from achievements and other actions
 - Buy virtual things (Lamborghini, house, ...) with money you earn
